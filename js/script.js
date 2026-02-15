@@ -483,28 +483,30 @@ function generateEstimate() {
         <title>御見積書</title>
         <style>
             @page { size: A4; margin: 10mm; }
-            body { font-family: 'Noto Sans JP', sans-serif; padding: 20px; max-width: 210mm; margin: 0 auto; color: #333; box-sizing: border-box; }
-            .header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #333; padding-bottom: 15px; }
-            .header h1 { font-size: 1.8rem; margin: 0; letter-spacing: 0.2em; }
-            .date { text-align: right; margin-top: 5px; font-size: 0.8rem; }
+            body { font-family: 'Noto Sans JP', sans-serif; padding: 10px; width: 100%; max-width: 210mm; margin: 0 auto; color: #333; box-sizing: border-box; font-size: 10pt; }
+            .header { text-align: center; margin-bottom: 10px; border-bottom: 2px solid #333; padding-bottom: 5px; }
+            .header h1 { font-size: 1.6rem; margin: 0; letter-spacing: 0.2em; }
+            .date { text-align: right; margin-top: 0; font-size: 0.8rem; }
             
-            .client-info { margin-bottom: 20px; }
+            .client-info { margin-bottom: 15px; }
             .client-info table { width: 100%; border: none; }
-            .client-info td { padding: 5px; border: none; border-bottom: 1px solid #ccc; vertical-align: bottom; }
+            .client-info td { padding: 2px 5px; border: none; border-bottom: 1px solid #ccc; vertical-align: bottom; }
             .client-info input { border: none; width: 100%; font-size: 1rem; outline: none; }
             
-            .estimate-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 0.9rem; }
-            .estimate-table th, .estimate-table td { border: 1px solid #ccc; padding: 8px 6px; }
+            .estimate-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; font-size: 0.85rem; }
+            .estimate-table th, .estimate-table td { border: 1px solid #ccc; padding: 5px 4px; }
             .estimate-table th { background-color: #f5f5f5; text-align: center; font-weight: bold; }
             .estimate-table td.num { text-align: right; }
             .estimate-table td.center { text-align: center; }
             
-            .total-section { float: right; width: 40%; margin-bottom: 20px; }
+            .total-section { float: right; width: 45%; margin-bottom: 15px; }
             .total-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-            .total-table th, .total-table td { padding: 8px; border-bottom: 1px solid #ccc; }
-            .total-table .grand-total { font-size: 1.2rem; font-weight: bold; border-bottom: 3px double #333; }
+            .total-table th, .total-table td { padding: 5px; border-bottom: 1px solid #ccc; }
+            .total-table .grand-total { font-size: 1.1rem; font-weight: bold; border-bottom: 3px double #333; }
             
-            .notes { clear: both; margin-top: 30px; border: 1px solid #ccc; padding: 15px; border-radius: 5px; font-size: 0.85rem; }
+            .notes { clear: both; margin-top: 20px; border: 1px solid #ccc; padding: 10px; border-radius: 5px; font-size: 0.8rem; }
+            .notes h4 { margin: 0 0 5px 0; }
+            .notes ul { margin: 0; padding-left: 20px; }
             
             @media print {
                 .no-print { display: none; }
@@ -567,7 +569,7 @@ function generateEstimate() {
             </ul>
         </div>
 
-        <div class="no-print" style="text-align: center; margin-top: 30px;">
+        <div class="no-print" style="text-align: center; margin-top: 20px;">
             <button onclick="window.print()" style="padding: 10px 25px; background: #333; color: white; border: none; border-radius: 4px; cursor: pointer;">印刷する</button>
             <button onclick="window.close()" style="padding: 10px 25px; background: #ccc; border: none; border-radius: 4px; cursor: pointer; margin-left: 10px;">閉じる</button>
         </div>
