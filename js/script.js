@@ -469,7 +469,7 @@ function generateEstimate() {
     // Dynamic Sizing Logic
     let styleSettings = {
         baseFont: '10pt',
-        tableFont: '0.70rem', // Reduced by ~1.5pt
+        tableFont: '0.62rem', // Reduced ~1pt (approx 8.3px)
         cellPadding: '5px 4px',
         headerMargin: '10px',
         totalWidth: '45%',
@@ -480,7 +480,7 @@ function generateEstimate() {
         // Very Dense
         styleSettings = {
             baseFont: '8pt',
-            tableFont: '0.60rem', // Reduced
+            tableFont: '0.52rem', // Reduced
             cellPadding: '2px 2px',
             headerMargin: '5px',
             totalWidth: '40%',
@@ -490,7 +490,7 @@ function generateEstimate() {
         // Compact
         styleSettings = {
             baseFont: '9pt',
-            tableFont: '0.65rem', // Reduced
+            tableFont: '0.57rem', // Reduced
             cellPadding: '3px 3px',
             headerMargin: '8px',
             totalWidth: '45%',
@@ -516,9 +516,10 @@ function generateEstimate() {
             .date { text-align: right; margin-top: 0; font-size: 0.8em; }
             
             .client-info { margin-bottom: 15px; }
-            .client-info table { width: 100%; border: none; }
-            .client-info td { padding: 2px 5px; border: none; border-bottom: 1px solid #ccc; vertical-align: bottom; }
-            .client-info input { border: none; width: 100%; font-size: 1em; outline: none; }
+            .client-info table { width: 100%; border: none; border-collapse: collapse; }
+            .client-info td { padding: 2px 5px; border: none; vertical-align: bottom; }
+            .client-info .input-cell { border-bottom: 1px solid #ccc; }
+            .client-info input { border: none; width: 100%; font-size: 1em; outline: none; background: transparent; }
             
             .estimate-table { width: 100%; border-collapse: collapse; margin-bottom: 10px; font-size: ${styleSettings.tableFont}; }
             .estimate-table th, .estimate-table td { border: 1px solid #ccc; padding: ${styleSettings.cellPadding}; }
@@ -550,8 +551,13 @@ function generateEstimate() {
 
         <div class="client-info">
             <table>
-                <tr><td width="100">ご相談者:</td><td><input type="text"></td></tr>
-                <tr><td>ご心配な方:</td><td><input type="text"></td></tr>
+                <tr>
+                    <td width="80" style="white-space: nowrap;">ご相談者:</td>
+                    <td class="input-cell"><input type="text"></td>
+                    <td width="20"></td> <!-- Spacer -->
+                    <td width="80" style="white-space: nowrap;">ご心配な方:</td>
+                    <td class="input-cell"><input type="text"></td>
+                </tr>
             </table>
         </div>
 
