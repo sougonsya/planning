@@ -39,7 +39,11 @@ body {
 
 /* Sidebar */
 .sidebar {
-    width: 250px;
+    width: 200px;
+    min-width: 200px;
+    /* Prevent shrinking */
+    flex-shrink: 0;
+    /* Prevent shrinking */
     background-color: var(--white);
     border-right: 1px solid var(--border-color);
     display: flex;
@@ -93,7 +97,8 @@ body {
     flex-grow: 1;
     padding: 20px 40px 100px;
     /* Bottom padding for footer */
-    overflow-y: auto;
+    overflow-y: scroll;
+    /* Always show scrollbar to prevent layout shift */
     background-color: #fcfcfc;
 }
 
@@ -289,16 +294,20 @@ body {
 .app-footer {
     position: fixed;
     bottom: 0;
-    left: 250px;
-    /* Sidebar width */
+    left: 0;
+    /* Full width */
     right: 0;
     background-color: var(--white);
-    padding: 15px 40px;
+    padding: 0 40px;
+    /* Removed vertical padding, handled by flex/height */
+    height: 80px;
+    /* Fixed height */
     box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.05);
     display: flex;
     justify-content: space-between;
     align-items: center;
     z-index: 100;
+    box-sizing: border-box;
 }
 
 .order-summary {
@@ -310,16 +319,20 @@ body {
 .summary-label {
     font-size: 1.2rem;
     font-weight: 500;
+    white-space: nowrap;
+    /* Prevent wrapping */
 }
 
 .total-price {
-    font-size: 2.5rem;
+    font-size: 1.8rem;
+    /* Reduced from 2.5rem */
     font-weight: 700;
     color: var(--secondary-color);
 }
 
 .currency {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
+    /* Reduced from 1.5rem */
     margin-left: 5px;
 }
 
@@ -334,9 +347,10 @@ body {
 }
 
 .btn {
-    padding: 12px 30px;
+    padding: 12px 20px;
     border-radius: 8px;
-    font-size: 1.1rem;
+    font-size: 0.95rem;
+    /* Reduced font size */
     font-weight: 700;
     cursor: pointer;
     border: none;
@@ -471,7 +485,19 @@ body {
         height: auto;
         flex-direction: row;
         overflow-x: auto;
-        padding: 10px;
+        padding: 0;
+        position: sticky;
+        top: 0;
+        z-index: 90;
+        background: var(--white);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        -webkit-overflow-scrolling: touch;
+        white-space: nowrap;
+    }
+
+    .logo-area {
+        display: none;
+        /* Hide logo on mobile to save space, or make smaller */
     }
 
     .category-nav {
@@ -487,22 +513,118 @@ body {
 
     .category-nav li.active {
         border-bottom-color: var(--primary-color);
+        background-color: #f0f8ff;
     }
 
     .main-content {
-        padding: 20px 20px 180px;
-        /* Space for footer */
+        padding: 20px 15px 200px;
+        /* Increased bottom padding to prevent footer overlap */
+    }
+
+    .content-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .items-grid {
+        grid-template-columns: 1fr;
+        /* Single column on mobile */
+        gap: 20px;
+    }
+
+    .item-card.wide {
+        flex-direction: column;
+        min-height: auto;
+    }
+
+    .item-card.wide .card-img {
+        width: 100%;
+        height: 150px;
+    }
+
+    .item-card.wide .card-body {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .item-card.wide .card-title {
+        font-size: 1.4rem;
+        margin-bottom: 10px;
+    }
+
+    .item-card.wide .card-price {
+        font-size: 1.6rem;
+    }
+
+    .select-btn {
+        padding: 14px;
+        /* Larger touch target */
+        font-size: 1.1rem;
     }
 
     .app-footer {
         left: 0;
-        flex-direction: column;
-        gap: 15px;
-        padding: 15px 20px;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 10px;
+        padding: 10px 15px;
+        align-items: center;
+        background: var(--white);
+        /* Solid background */
+        border-top: 1px solid #eee;
     }
 
     .order-summary {
+        grid-column: 1 / -1;
         width: 100%;
         justify-content: space-between;
+        align-items: center;
+        margin-bottom: 5px;
+    }
+
+    .summary-label {
+        font-size: 1rem;
+    }
+
+    .total-price {
+        font-size: 1.6rem;
+    }
+
+    .currency {
+        font-size: 1rem;
+    }
+
+    .action-buttons {
+        grid-column: 1 / -1;
+        width: 100%;
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn {
+        flex: 1;
+        padding: 12px;
+        font-size: 1rem;
+        height: 50px;
+        /* Consistent height */
+    }
+}
+
+@media print {
+
+    .sidebar,
+    .app-footer,
+    .step-indicator,
+    .logo-area {
+        display: none;
+    }
+
+    .main-content {
+        padding: 0;
+        overflow: visible;
+    }
+
+    .app-container {
+        height: auto;
+        display: block;
     }
 }

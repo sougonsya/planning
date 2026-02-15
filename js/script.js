@@ -27,7 +27,7 @@ const categories = [
     {
         id: 'urn',
         name: '骨壺',
-        title: '骨壺をお選びください<br><span style="font-size: 0.9rem; color: #666;">※すべて５寸壺になります。</span>',
+        title: '骨壺をお選びください<br><span style="font-size: 0.8rem; color: #666; font-weight: normal;">※すべて５寸壺になります。</span>',
         items: [
             { id: 'urn-1', name: '白壺', price: 10000, img: 'assets/images/urn_1.jpg' },
             { id: 'urn-2', name: 'メッセージ', price: 10000, img: 'assets/images/urn_2.jpg' },
@@ -42,18 +42,18 @@ const categories = [
     {
         id: 'portrait',
         name: '遺影写真',
-        title: '遺影写真のスタイルをお選びください',
+        title: '遺影写真が必要な場合は選択してください',
         items: [
-            { id: 'photo-0', name: '無し', price: 0, img: 'assets/images/photo_0.jpg' },
+            // { id: 'photo-0', name: '無し', price: 0, img: 'assets/images/photo_0.jpg' }, // Removed
             { id: 'photo-1', name: '有り（カラー）', price: 20000, img: 'assets/images/photo_1.jpg' }
         ]
     },
     {
         id: 'pillow-flowers',
         name: '枕花',
-        title: '枕花をお選びください',
+        title: '枕花が必要な場合は選択してください',
         items: [
-            { id: 'pillow-0', name: '無し', price: 0, img: 'assets/images/flower_0.jpg' },
+            // { id: 'pillow-0', name: '無し', price: 0, img: 'assets/images/flower_0.jpg' }, // Removed
             { id: 'pillow-1', name: '有り', price: 10000, img: 'assets/images/flower_1.jpg' }
         ]
     },
@@ -107,13 +107,13 @@ const categories = [
     },
     {
         id: 'reception',
-        name: '接待費・人数',
-        title: '会葬者人数と接待品をお選びください<br><span style="font-size: 0.9rem; color: #d9534f;">※あくまで参考価格です</span>',
+        name: '接待費',
+        title: '会葬者人数と接待品をお選びください<br><span style="font-size: 0.8rem; color: #d9534f; font-weight: normal;">※目安金額です、料理・品物により変動します</span>',
         isReception: true,
         items: [
-            { id: 'rec-none', name: 'お礼品無し', price: 0, img: 'assets/images/rec_none.jpg' },
-            { id: 'rec-gift', name: 'お礼品有り', price: 1000, img: 'assets/images/rec_gift.jpg' },
-            { id: 'rec-food', name: '通夜振る舞い', price: 1500, img: 'assets/images/rec_food.jpg' }
+            // { id: 'rec-none', name: 'お礼品無し', price: 0, img: 'assets/images/rec_none.jpg' }, // Removed
+            { id: 'rec-gift', name: '御礼品（会葬礼状付き）', price: 1000, img: 'assets/images/rec_gift.jpg' },
+            { id: 'rec-food', name: '料理', price: 2000, img: 'assets/images/rec_food.jpg' }
         ]
     }
 ];
@@ -135,6 +135,7 @@ const totalStepsEl = document.getElementById('total-steps');
 const totalAmountEl = document.getElementById('total-amount');
 const btnPrev = document.getElementById('btn-prev');
 const btnNext = document.getElementById('btn-next');
+const btnEstimate = document.getElementById('btn-estimate');
 const receptionAreaEl = document.getElementById('reception-area');
 const attendeeCountEl = document.getElementById('attendee-count');
 
@@ -200,8 +201,23 @@ function updateUI() {
     }
 
     // Update Buttons
+    // Update Buttons
     btnPrev.disabled = state.currentCategoryIndex === 0;
-    btnNext.textContent = state.currentCategoryIndex === categories.length - 1 ? '完了' : '次へ進む';
+
+    if (state.currentCategoryIndex === categories.length - 1) {
+        btnNext.style.display = 'none'; // Hide on last step
+    } else {
+        btnNext.style.display = 'inline-block';
+        btnNext.textContent = '次へ';
+    }
+
+    // Conditional Estimate Button
+    const requiredCats = ['altar', 'coffin', 'urn', 'encoffinment', 'hearse'];
+    const allSelected = requiredCats.every(id => state.selections[id] && Object.keys(state.selections[id]).length > 0);
+
+    if (btnEstimate) {
+        btnEstimate.style.display = allSelected ? 'inline-block' : 'none';
+    }
 
     updateTotalAmount();
 }
@@ -380,46 +396,84 @@ function jumpToCategory(index) {
 }
 
 // Generate Estimate Sheet
+// Generate Estimate Sheet
 function generateEstimate() {
-    // Collect Data
-    const d = {
-        altar: Object.values(state.selections['altar'] || {})[0],
-        coffin: Object.values(state.selections['coffin'] || {})[0],
-        urn: Object.values(state.selections['urn'] || {})[0],
-        portrait: Object.values(state.selections['portrait'] || {})[0],
-        pillow: Object.values(state.selections['pillow-flowers'] || {})[0],
-        encoffin: Object.values(state.selections['encoffinment'] || {})[0],
-        hearse: Object.values(state.selections['hearse'] || {})[0],
-        fixed: Object.values(state.selections['fixed-costs'] || {})[0]
-    };
+    // Calculate Totals first
+    let subtotal = 0;
 
-    const options = state.selections['options'] || {};
-    const reception = state.selections['reception'] || {};
+    // Create rows based on Category Order > Item Selection
+    let rowsHtml = '';
 
-    // Calculate Totals
-    let subtotal1 = 0;
-    const basicItems = [d.altar, d.coffin, d.urn, d.portrait, d.pillow, d.encoffin, d.hearse, d.fixed];
-    basicItems.forEach(item => { if (item) subtotal1 += item.price; });
+    categories.forEach(cat => {
+        const catSelections = state.selections[cat.id];
+        if (!catSelections) return;
 
-    let subtotal2 = 0;
-    // Map options to list
-    const optionItems = Object.values(options);
-    const receptionItems = Object.values(reception);
+        // Special handling for Fixed Costs
+        if (cat.id === 'fixed-costs') {
+            const item = Object.values(catSelections)[0];
+            if (item) {
+                // Extract the small tag content for the note or use specific text
+                const match = item.name.match(/<small>(.*?)<\/small>/);
+                const noteText = match ? match[1] : '装具一式・供物一式・ご遺体保全（2日分）・奉仕料・搬送布団・寝台車（10kmまで）・斎場使用料';
 
-    optionItems.forEach(item => subtotal2 += item.price * item.quantity);
-    receptionItems.forEach(item => subtotal2 += item.price * state.attendees * item.quantity);
+                // Row 1: Item Name and Price
+                rowsHtml += `
+                    <tr>
+                        <td><strong>${cat.name}</strong></td>
+                        <td class="num">${item.price.toLocaleString()}</td>
+                        <td class="center">1</td>
+                        <td class="num">${item.price.toLocaleString()}</td>
+                    </tr>
+                `;
+                // Row 2: Breakdown (Note)
+                rowsHtml += `
+                    <tr>
+                        <td colspan="4" style="padding: 5px 10px; color: #666; font-size: 0.85rem; border-top: none;">
+                            <span style="font-size: 0.8rem;">【内訳】 ${noteText}</span>
+                        </td>
+                    </tr>
+                `;
+                subtotal += item.price;
+            }
+            return;
+        }
 
-    const tax = Math.floor((subtotal1 + subtotal2) * 0.1);
-    const total = subtotal1 + subtotal2 + tax;
+        Object.values(catSelections).forEach(item => {
+            let price = item.price;
+            let quantity = item.quantity || 1;
+            let totalItemPrice = 0;
 
-    // Helper for formatting price
-    const fmt = (num) => num ? num.toLocaleString() : '';
-    // Helper to get item name/price safely
-    const getName = (obj) => obj ? obj.name.split('<')[0] : '';
-    const getPrice = (obj) => obj ? fmt(obj.price) : '';
+            if (cat.isReception) {
+                // Reception items: price * attendees * quantity
+                quantity = state.attendees * quantity; // Total quantity
+                totalItemPrice = price * quantity;
 
-    // Fixed Set details handling (if fixed set exists, mark others as included)
-    const fixedIncluded = d.fixed ? 'セットに含む' : '';
+                rowsHtml += `
+                    <tr>
+                        <td>${cat.name} - ${item.name.replace(/<[^>]*>/g, '')} <small>(${state.attendees}名)</small></td>
+                        <td class="num">${price.toLocaleString()}</td>
+                        <td class="center">${quantity}</td>
+                        <td class="num">${totalItemPrice.toLocaleString()}</td>
+                    </tr>
+                 `;
+            } else {
+                totalItemPrice = price * quantity;
+                rowsHtml += `
+                    <tr>
+                        <td>${cat.name} - ${item.name.replace(/<[^>]*>/g, '')}</td>
+                        <td class="num">${price.toLocaleString()}</td>
+                        <td class="center">${quantity}</td>
+                        <td class="num">${totalItemPrice.toLocaleString()}</td>
+                    </tr>
+                `;
+            }
+            subtotal += totalItemPrice;
+        });
+    });
+
+    const tax = Math.floor(subtotal * 0.1);
+    const total = subtotal + tax;
+    const fmt = (num) => num.toLocaleString();
 
     const html = `
     <!DOCTYPE html>
@@ -428,32 +482,33 @@ function generateEstimate() {
         <meta charset="UTF-8">
         <title>御見積書</title>
         <style>
-            body { font-family: 'Noto Sans JP', sans-serif; padding: 40px; max-width: 900px; margin: 0 auto; color: #333; }
-            .header { text-align: center; margin-bottom: 40px; border-bottom: 2px solid #333; padding-bottom: 20px; }
-            .header h1 { font-size: 2rem; margin: 0; letter-spacing: 0.2em; }
-            .date { text-align: right; margin-top: 10px; font-size: 0.9rem; }
+            @page { size: A4; margin: 10mm; }
+            body { font-family: 'Noto Sans JP', sans-serif; padding: 20px; max-width: 210mm; margin: 0 auto; color: #333; box-sizing: border-box; }
+            .header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #333; padding-bottom: 15px; }
+            .header h1 { font-size: 1.8rem; margin: 0; letter-spacing: 0.2em; }
+            .date { text-align: right; margin-top: 5px; font-size: 0.8rem; }
             
-            .client-info { margin-bottom: 30px; }
+            .client-info { margin-bottom: 20px; }
             .client-info table { width: 100%; border: none; }
-            .client-info td { padding: 5px; border: none; border-bottom: 1px solid #ccc; }
-            .client-info input { border: none; width: 100%; font-size: 1rem; }
+            .client-info td { padding: 5px; border: none; border-bottom: 1px solid #ccc; vertical-align: bottom; }
+            .client-info input { border: none; width: 100%; font-size: 1rem; outline: none; }
             
-            .estimate-table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
-            .estimate-table th, .estimate-table td { border: 1px solid #ccc; padding: 12px 8px; }
+            .estimate-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 0.9rem; }
+            .estimate-table th, .estimate-table td { border: 1px solid #ccc; padding: 8px 6px; }
             .estimate-table th { background-color: #f5f5f5; text-align: center; font-weight: bold; }
             .estimate-table td.num { text-align: right; }
             .estimate-table td.center { text-align: center; }
             
-            .total-section { float: right; width: 40%; }
-            .total-table { width: 100%; border-collapse: collapse; }
-            .total-table th, .total-table td { padding: 10px; border-bottom: 1px solid #ccc; }
-            .total-table .grand-total { font-size: 1.5rem; font-weight: bold; border-bottom: 3px double #333; }
+            .total-section { float: right; width: 40%; margin-bottom: 20px; }
+            .total-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+            .total-table th, .total-table td { padding: 8px; border-bottom: 1px solid #ccc; }
+            .total-table .grand-total { font-size: 1.2rem; font-weight: bold; border-bottom: 3px double #333; }
             
-            .notes { clear: both; margin-top: 50px; border: 1px solid #ccc; padding: 20px; border-radius: 5px; }
+            .notes { clear: both; margin-top: 30px; border: 1px solid #ccc; padding: 15px; border-radius: 5px; font-size: 0.85rem; }
             
             @media print {
                 .no-print { display: none; }
-                body { padding: 0; }
+                body { padding: 0; width: 100%; }
                 input { background: transparent; }
             }
         </style>
@@ -466,8 +521,8 @@ function generateEstimate() {
 
         <div class="client-info">
             <table>
-                <tr><td width="120">相談者氏名:</td><td><input type="text" placeholder="（手書き用スペース）"></td></tr>
-                <tr><td>ご心配な方:</td><td><input type="text" placeholder="（手書き用スペース）"></td></tr>
+                <tr><td width="100">ご相談者:</td><td><input type="text"></td></tr>
+                <tr><td>ご心配な方:</td><td><input type="text"></td></tr>
             </table>
         </div>
 
@@ -475,29 +530,14 @@ function generateEstimate() {
             <thead>
                 <tr>
                     <th>項目名</th>
-                    <th width="100">単価</th>
-                    <th width="80">数量</th>
-                    <th width="120">金額</th>
+                    <th width="80">単価</th>
+                    <th width="60">数量</th>
+                    <th width="100">金額</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- Basic Items -->
-                ${renderRow(d.altar)}
-                ${renderRow(d.coffin)}
-                ${renderRow(d.urn)}
-                ${renderRow(d.portrait)}
-                ${renderRow(d.hearse)}
-                ${renderRow(d.encoffin)}
-                ${d.fixed ? renderRow(d.fixed) : ''}
-                ${d.fixed ? '<tr><td colspan="4" style="color:#666; font-size:0.9rem; padding-left:20px;">（内訳：装具一式、供物一式、ご遺体保全、奉仕料、搬送布団、寝台車、斎場使用料）</td></tr>' : ''}
-                
-                <!-- Additional Options -->
-                ${optionItems.map(item => renderRow(item)).join('')}
-                
-                <!-- Reception Items -->
-                ${receptionItems.map(item => renderReceptionItemRow(item)).join('')}
-                
-                ${(!subtotal1 && !subtotal2) ? '<tr><td colspan="4" class="center">選択された項目はありません</td></tr>' : ''}
+                ${rowsHtml}
+                ${!subtotal ? '<tr><td colspan="4" class="center">選択された項目はありません</td></tr>' : ''}
             </tbody>
         </table>
 
@@ -505,7 +545,7 @@ function generateEstimate() {
             <table class="total-table">
                 <tr>
                     <th>小計</th>
-                    <td class="num">${fmt(subtotal1 + subtotal2)} 円</td>
+                    <td class="num">${fmt(subtotal)} 円</td>
                 </tr>
                 <tr>
                     <th>消費税 (10%)</th>
@@ -520,13 +560,16 @@ function generateEstimate() {
 
         <div class="notes">
             <h4>【備考】</h4>
-            <p>※ この見積書はシミュレーション結果に基づく概算です。実際のご契約時に詳細が変更となる場合がございます。</p>
-            <p>※ 接待費（料理・返礼品）は、ご会葬人数により変動いたします。</p>
+            <ul style="padding-left: 20px; list-style-type: square;">
+                <li>搬送回数、搬送距離が11km以上、夜間帯の搬送により追加料金が発生する場合があります。</li>
+                <li>この見積書はシミュレーション結果に基づく概算です。実際のご契約時に詳細が変更となる場合がございます。</li>
+                <li>接待費（料理・返礼品）は、ご会葬人数により変動いたします。</li>
+            </ul>
         </div>
 
-        <div class="no-print" style="text-align: center; margin-top: 50px;">
-            <button onclick="window.print()" style="padding: 12px 30px; background: #333; color: white; border: none; border-radius: 4px; cursor: pointer;">印刷する</button>
-            <button onclick="window.close()" style="padding: 12px 30px; background: #ccc; border: none; border-radius: 4px; cursor: pointer; margin-left: 10px;">閉じる</button>
+        <div class="no-print" style="text-align: center; margin-top: 30px;">
+            <button onclick="window.print()" style="padding: 10px 25px; background: #333; color: white; border: none; border-radius: 4px; cursor: pointer;">印刷する</button>
+            <button onclick="window.close()" style="padding: 10px 25px; background: #ccc; border: none; border-radius: 4px; cursor: pointer; margin-left: 10px;">閉じる</button>
         </div>
     </body>
     </html>
@@ -537,36 +580,8 @@ function generateEstimate() {
     win.document.close();
 }
 
-function renderRow(item) {
-    if (!item) return '';
-    if (item.price === 0 && !item.name.includes('無し')) return ''; // Hide 0 yen items unless strictly "None" selected? Actually showing "None" is good.
-    // Clean name (remove html tags)
-    const name = item.name.replace(/<[^>]*>/g, '');
-    const total = item.price * (item.quantity || 1);
-    return `
-        <tr>
-            <td>${name}</td>
-            <td class="num">${item.price.toLocaleString()}</td>
-            <td class="center">${item.quantity || 1}</td>
-            <td class="num">${total.toLocaleString()}</td>
-        </tr>
-    `;
-}
-
-function renderReceptionItemRow(item) {
-    if (!item) return '';
-    const name = item.name.replace(/<[^>]*>/g, '');
-    const qty = state.attendees * (item.quantity || 1);
-    const total = item.price * qty;
-    return `
-        <tr>
-            <td>${name} <small>(${state.attendees}名)</small></td>
-            <td class="num">${item.price.toLocaleString()}</td>
-            <td class="center">${qty}</td>
-            <td class="num">${total.toLocaleString()}</td>
-        </tr>
-    `;
-}
+function renderRow(item) { return ''; } // Deprecated
+function renderReceptionItemRow(item) { return ''; } // Deprecated
 
 // Start
 document.addEventListener('DOMContentLoaded', init);
