@@ -398,10 +398,9 @@ function jumpToCategory(index) {
 // Generate Estimate Sheet
 // Generate Estimate Sheet
 function generateEstimate() {
-    // Calculate Totals first
+    // Calculate Totals and Count Rows first
     let subtotal = 0;
-
-    // Create rows based on Category Order > Item Selection
+    let rowCount = 0;
     let rowsHtml = '';
 
     categories.forEach(cat => {
@@ -412,11 +411,9 @@ function generateEstimate() {
         if (cat.id === 'fixed-costs') {
             const item = Object.values(catSelections)[0];
             if (item) {
-                // Extract the small tag content for the note or use specific text
                 const match = item.name.match(/<small>(.*?)<\/small>/);
                 const noteText = match ? match[1] : '装具一式・供物一式・ご遺体保全（2日分）・奉仕料・搬送布団・寝台車（10kmまで）・斎場使用料';
 
-                // Row 1: Item Name and Price
                 rowsHtml += `
                     <tr>
                         <td><strong>${cat.name}</strong></td>
@@ -424,16 +421,14 @@ function generateEstimate() {
                         <td class="center">1</td>
                         <td class="num">${item.price.toLocaleString()}</td>
                     </tr>
-                `;
-                // Row 2: Breakdown (Note)
-                rowsHtml += `
                     <tr>
-                        <td colspan="4" style="padding: 5px 10px; color: #666; font-size: 0.85rem; border-top: none;">
-                            <span style="font-size: 0.8rem;">【内訳】 ${noteText}</span>
+                        <td colspan="4" style="padding: 5px 10px; color: #666; font-size: 0.85em; border-top: none;">
+                            <span style="font-size: 0.9em;">【内訳】 ${noteText}</span>
                         </td>
                     </tr>
                 `;
                 subtotal += item.price;
+                rowCount += 2; // Fixed costs take 2 rows
             }
             return;
         }
@@ -444,8 +439,7 @@ function generateEstimate() {
             let totalItemPrice = 0;
 
             if (cat.isReception) {
-                // Reception items: price * attendees * quantity
-                quantity = state.attendees * quantity; // Total quantity
+                quantity = state.attendees * quantity;
                 totalItemPrice = price * quantity;
 
                 rowsHtml += `
@@ -468,8 +462,41 @@ function generateEstimate() {
                 `;
             }
             subtotal += totalItemPrice;
+            rowCount++;
         });
     });
+
+    // Dynamic Sizing Logic
+    let styleSettings = {
+        baseFont: '10pt',
+        tableFont: '0.85rem',
+        cellPadding: '5px 4px',
+        headerMargin: '10px',
+        totalWidth: '45%',
+        noteMargin: '20px'
+    };
+
+    if (rowCount > 25) {
+        // Very Dense
+        styleSettings = {
+            baseFont: '8pt',
+            tableFont: '0.75rem',
+            cellPadding: '2px 2px',
+            headerMargin: '5px',
+            totalWidth: '40%',
+            noteMargin: '10px'
+        };
+    } else if (rowCount > 15) {
+        // Compact
+        styleSettings = {
+            baseFont: '9pt',
+            tableFont: '0.8rem',
+            cellPadding: '3px 3px',
+            headerMargin: '8px',
+            totalWidth: '45%',
+            noteMargin: '15px'
+        };
+    }
 
     const tax = Math.floor(subtotal * 0.1);
     const total = subtotal + tax;
@@ -483,28 +510,28 @@ function generateEstimate() {
         <title>御見積書</title>
         <style>
             @page { size: A4; margin: 10mm; }
-            body { font-family: 'Noto Sans JP', sans-serif; padding: 10px; width: 100%; max-width: 210mm; margin: 0 auto; color: #333; box-sizing: border-box; font-size: 10pt; }
-            .header { text-align: center; margin-bottom: 10px; border-bottom: 2px solid #333; padding-bottom: 5px; }
-            .header h1 { font-size: 1.6rem; margin: 0; letter-spacing: 0.2em; }
-            .date { text-align: right; margin-top: 0; font-size: 0.8rem; }
+            body { font-family: 'Noto Sans JP', sans-serif; padding: 10px; width: 100%; max-width: 210mm; margin: 0 auto; color: #333; box-sizing: border-box; font-size: ${styleSettings.baseFont}; }
+            .header { text-align: center; margin-bottom: ${styleSettings.headerMargin}; border-bottom: 2px solid #333; padding-bottom: 5px; }
+            .header h1 { font-size: 1.6em; margin: 0; letter-spacing: 0.2em; }
+            .date { text-align: right; margin-top: 0; font-size: 0.8em; }
             
             .client-info { margin-bottom: 15px; }
             .client-info table { width: 100%; border: none; }
             .client-info td { padding: 2px 5px; border: none; border-bottom: 1px solid #ccc; vertical-align: bottom; }
-            .client-info input { border: none; width: 100%; font-size: 1rem; outline: none; }
+            .client-info input { border: none; width: 100%; font-size: 1em; outline: none; }
             
-            .estimate-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; font-size: 0.85rem; }
-            .estimate-table th, .estimate-table td { border: 1px solid #ccc; padding: 5px 4px; }
+            .estimate-table { width: 100%; border-collapse: collapse; margin-bottom: 10px; font-size: ${styleSettings.tableFont}; }
+            .estimate-table th, .estimate-table td { border: 1px solid #ccc; padding: ${styleSettings.cellPadding}; }
             .estimate-table th { background-color: #f5f5f5; text-align: center; font-weight: bold; }
             .estimate-table td.num { text-align: right; }
             .estimate-table td.center { text-align: center; }
             
-            .total-section { float: right; width: 45%; margin-bottom: 15px; }
-            .total-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-            .total-table th, .total-table td { padding: 5px; border-bottom: 1px solid #ccc; }
-            .total-table .grand-total { font-size: 1.1rem; font-weight: bold; border-bottom: 3px double #333; }
+            .total-section { float: right; width: ${styleSettings.totalWidth}; margin-bottom: 10px; }
+            .total-table { width: 100%; border-collapse: collapse; font-size: ${styleSettings.tableFont}; }
+            .total-table th, .total-table td { padding: 4px; border-bottom: 1px solid #ccc; }
+            .total-table .grand-total { font-size: 1.2em; font-weight: bold; border-bottom: 3px double #333; }
             
-            .notes { clear: both; margin-top: 20px; border: 1px solid #ccc; padding: 10px; border-radius: 5px; font-size: 0.8rem; }
+            .notes { clear: both; margin-top: ${styleSettings.noteMargin}; border: 1px solid #ccc; padding: 10px; border-radius: 5px; font-size: 0.8em; }
             .notes h4 { margin: 0 0 5px 0; }
             .notes ul { margin: 0; padding-left: 20px; }
             
