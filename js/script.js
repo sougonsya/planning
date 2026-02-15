@@ -469,7 +469,7 @@ function generateEstimate() {
     // Dynamic Sizing Logic
     let styleSettings = {
         baseFont: '10pt',
-        tableFont: '0.85rem',
+        tableFont: '0.70rem', // Reduced by ~1.5pt
         cellPadding: '5px 4px',
         headerMargin: '10px',
         totalWidth: '45%',
@@ -480,7 +480,7 @@ function generateEstimate() {
         // Very Dense
         styleSettings = {
             baseFont: '8pt',
-            tableFont: '0.75rem',
+            tableFont: '0.60rem', // Reduced
             cellPadding: '2px 2px',
             headerMargin: '5px',
             totalWidth: '40%',
@@ -490,7 +490,7 @@ function generateEstimate() {
         // Compact
         styleSettings = {
             baseFont: '9pt',
-            tableFont: '0.8rem',
+            tableFont: '0.65rem', // Reduced
             cellPadding: '3px 3px',
             headerMargin: '8px',
             totalWidth: '45%',
@@ -531,7 +531,7 @@ function generateEstimate() {
             .total-table th, .total-table td { padding: 4px; border-bottom: 1px solid #ccc; }
             .total-table .grand-total { font-size: 1.2em; font-weight: bold; border-bottom: 3px double #333; }
             
-            .notes { clear: both; margin-top: ${styleSettings.noteMargin}; border: 1px solid #ccc; padding: 10px; border-radius: 5px; font-size: 0.8em; }
+            .notes { clear: both; margin-top: ${styleSettings.noteMargin}; border: 1px solid #ccc; padding: 10px; border-radius: 5px; font-size: 0.65em; }
             .notes h4 { margin: 0 0 5px 0; }
             .notes ul { margin: 0; padding-left: 20px; }
             
