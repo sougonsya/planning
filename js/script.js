@@ -541,6 +541,22 @@ function generateEstimate() {
                 body { padding: 0; width: 100%; }
                 input { background: transparent; }
             }
+
+            @media screen and (max-width: 600px) {
+                body { padding: 5px; width: 100%; font-size: 12px; }
+                .header h1 { font-size: 1.4em; }
+                .client-info table, .client-info tbody, .client-info tr, .client-info td { display: block; width: 100%; }
+                .client-info td { padding: 5px 0; border: none; }
+                .client-info .input-cell { border-bottom: 1px solid #ccc; margin-bottom: 10px; }
+                
+                .estimate-table { font-size: 0.75rem; }
+                .estimate-table th, .estimate-table td { padding: 4px 2px; }
+                
+                .total-section { float: none; width: 100%; margin-top: 20px; }
+                
+                .notes { font-size: 0.75rem; }
+                .notes ul { padding-left: 15px; }
+            }
         </style>
     </head>
     <body>
