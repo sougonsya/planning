@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>葬儀プランシミュレーション</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="logo-area">
+                <h1>事前相談プラン見積もり</h1>
+            </div>
+            <ul id="category-list" class="category-nav">
+                <!-- Categories will be injected by JS -->
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="content-header">
+                <h2 id="current-category-title">カテゴリー名</h2>
+                <div class="step-indicator">
+                    <span id="current-step">1</span> / <span id="total-steps">8</span>
+                </div>
+            </header>
+
+            <div id="items-grid" class="items-grid">
+                <!-- Items will be injected by JS -->
+            </div>
+
+            <!-- Reception/Attendees Section (Initially Hidden) -->
+            <div id="reception-area" class="reception-container hidden">
+                <div class="attendees-control">
+                    <h3>会葬者人数</h3>
+                    <div class="stepper">
+                        <button id="btn-decrease" class="stepper-btn">-</button>
+                        <span id="attendee-count" class="stepper-value">10</span>
+                        <span class="unit">名</span>
+                        <button id="btn-increase" class="stepper-btn">+</button>
+                    </div>
+                </div>
+                <div id="reception-items-grid" class="items-grid">
+                    <!-- Reception items will be injected by JS -->
+                </div>
+            </div>
+        </main>
+
+        <!-- Fixed Footer -->
+        <footer class="app-footer">
+            <div class="order-summary">
+                <div class="summary-label">現在の概算費用</div>
+                <div class="total-price">
+                    <span id="total-amount">0</span>
+                    <span class="currency">円</span>
+                    <span class="tax-note">（税込）</span>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <button id="btn-prev" class="btn btn-secondary" disabled>戻る</button>
+                <button id="btn-estimate" class="btn btn-info"
+                    style="margin-right: 10px; background-color: #17a2b8; color: white; border: none;">見積書作成</button>
+                <button id="btn-next" class="btn btn-primary">次へ進む</button>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Modals -->
+    <div id="item-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-body">
+                <img id="modal-img" src="" alt="">
+                <h3 id="modal-title"></h3>
+                <p id="modal-desc"></p>
+                <div class="modal-price" id="modal-price"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>
