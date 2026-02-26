@@ -311,21 +311,18 @@ function renderItems(category, container) {
         const isReception = !!category.isReception;
         const allowQuantity = !!item.allowQuantity;
 
+        // カードタイトル横に拡大ボタンを配置
         card.innerHTML = `
             <div class="card-img" style="background-image: url('${bgImgUrl}')"></div>
             <div class="card-body">
-                <div class="card-title">${item.name}</div>
+                <div class="card-header-row" style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 10px;">
+                    <div class="card-title" style="margin-bottom: 0;">${item.name}</div>
+                    <button class="expand-btn" onclick="event.stopPropagation(); openImageModal('${bgImgUrl}', '${escapedName}', ${item.price}, ${isReception}, ${allowQuantity})" style="padding: 4px 8px; font-size: 0.8rem; background: #e0e0e0; border: none; border-radius: 4px; cursor: pointer; white-space: nowrap; margin-left: 10px;">拡大表示</button>
+                </div>
                 <div class="card-price">${displayPrice.toLocaleString()}${priceSuffix}</div> 
                 ${controlHtml}
             </div>
         `;
-
-        // 画像クリック時のイベントリスナーを追加
-        const imgEl = card.querySelector('.card-img');
-        imgEl.addEventListener('click', (e) => {
-            e.stopPropagation(); // イベントが親要素（card）に伝わるのを防ぐ
-            openImageModal(bgImgUrl, item.name, item.price, isReception, allowQuantity);
-        });
 
         if (!item.fixed && !item.allowQuantity) {
             card.onclick = () => toggleSelection(category.id, item);

@@ -233,13 +233,6 @@ body {
     background-repeat: no-repeat;
     /* 背景画像としてのサイズ調整も cover を指定する */
     background-size: cover;
-    /* クリック可能であることを示す */
-    cursor: pointer;
-    transition: transform 0.3s ease;
-}
-
-.card-img:hover {
-    opacity: 0.9;
 }
 
 .card-body {
@@ -250,6 +243,15 @@ body {
     font-size: 1.2rem;
     margin-bottom: 10px;
     font-weight: 700;
+}
+
+.expand-btn {
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.expand-btn:hover {
+    background-color: var(--primary-color) !important;
+    color: var(--white);
 }
 
 .card-price {
