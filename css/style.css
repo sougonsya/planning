@@ -162,6 +162,25 @@ body {
     height: auto;
 }
 
+/* Narrow/Tall style for specific categories */
+.item-card.narrow {
+    /* デフォルトの 280px より細くする */
+    grid-column: span 1;
+    min-height: 380px;
+    /* 縦を少し伸ばす */
+}
+
+.item-card.narrow .card-img {
+    height: 220px;
+    /* 画像部分の縦幅も少し伸ばす */
+}
+
+/* Grid Layout overrides for narrow items */
+.items-grid:has(.item-card.narrow) {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    /* 細いカード用にグリッド幅を調整 */
+}
+
 .item-card.wide .card-body {
     width: 60%;
     padding: 30px;

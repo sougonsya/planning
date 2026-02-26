@@ -234,6 +234,11 @@ function renderItems(category, container) {
             card.classList.add('wide');
         }
 
+        // Apply narrow/tall style for specific categories
+        if (['pillow-flowers', 'options', 'reception'].includes(category.id)) {
+            card.classList.add('narrow');
+        }
+
         // Check if selected
         const selection = state.selections[category.id] && state.selections[category.id][item.id];
         const isSelected = !!selection;
