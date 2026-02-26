@@ -166,18 +166,18 @@ body {
 .item-card.narrow {
     /* デフォルトの 280px より細くする */
     grid-column: span 1;
-    min-height: 380px;
-    /* 縦を少し伸ばす */
+    min-height: 420px;
+    /* 縦をさらに伸ばす */
 }
 
 .item-card.narrow .card-img {
-    height: 220px;
-    /* 画像部分の縦幅も少し伸ばす */
+    height: 280px;
+    /* 画像部分の縦幅もさらに伸ばす */
 }
 
 /* Grid Layout overrides for narrow items */
 .items-grid:has(.item-card.narrow) {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     /* 細いカード用にグリッド幅を調整 */
 }
 
@@ -226,13 +226,13 @@ body {
 .card-img {
     height: 180px;
     width: 100%;
-    /* 写真の種類によって見切れ方が変わるのを防ぎ、全体が収まるようにする */
-    object-fit: contain;
+    /* 写真がカードの枠いっぱいに表示されるように cover を指定する */
+    object-fit: cover;
     background-color: #f4f4f4;
     background-position: center;
     background-repeat: no-repeat;
-    /* 背景画像としてのサイズ調整を追加 */
-    background-size: contain;
+    /* 背景画像としてのサイズ調整も cover を指定する */
+    background-size: cover;
 }
 
 .card-body {
@@ -243,6 +243,15 @@ body {
     font-size: 1.2rem;
     margin-bottom: 10px;
     font-weight: 700;
+}
+
+.expand-btn {
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.expand-btn:hover {
+    background-color: var(--primary-color) !important;
+    color: var(--white);
 }
 
 .card-price {
@@ -473,7 +482,8 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.7);
+    /* 少し暗くする */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -485,16 +495,50 @@ body {
     padding: 30px;
     border-radius: 12px;
     max-width: 600px;
+    /* 拡大表示用に少し大きくしても良いが今回は600px */
     width: 90%;
     position: relative;
+    text-align: center;
+    /* 中央揃え */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    max-height: 90vh;
+    /* 画面に収める */
+    overflow-y: auto;
+}
+
+#modal-img {
+    max-width: 100%;
+    max-height: 60vh;
+    object-fit: contain;
+    /* 画像全体が見えるように */
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+#modal-title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+#modal-price {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    font-weight: bold;
 }
 
 .close-modal {
     position: absolute;
     top: 15px;
     right: 20px;
-    font-size: 2rem;
+    font-size: 2.5rem;
     cursor: pointer;
+    color: #333;
+    line-height: 1;
+    z-index: 10;
+}
+
+.close-modal:hover {
+    color: var(--primary-color);
 }
 
 /* Responsive */

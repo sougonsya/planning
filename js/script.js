@@ -139,6 +139,14 @@ const btnEstimate = document.getElementById('btn-estimate');
 const receptionAreaEl = document.getElementById('reception-area');
 const attendeeCountEl = document.getElementById('attendee-count');
 
+// Modal Elements
+const itemModalEl = document.getElementById('item-modal');
+const modalImgEl = document.getElementById('modal-img');
+const modalTitleEl = document.getElementById('modal-title');
+const modalDescEl = document.getElementById('modal-desc');
+const modalPriceEl = document.getElementById('modal-price');
+const closeModalBtn = document.querySelector('.close-modal');
+
 // Initialize
 function init() {
     // Auto-select fixed items
@@ -158,6 +166,16 @@ function init() {
     document.getElementById('btn-decrease').addEventListener('click', () => updateAttendees(-1));
     btnNext.addEventListener('click', nextCategory);
     btnPrev.addEventListener('click', prevCategory);
+
+    // Modal Events
+    if (closeModalBtn) {
+        closeModalBtn.addEventListener('click', closeModal);
+    }
+    window.addEventListener('click', (e) => {
+        if (e.target === itemModalEl) {
+            closeModal();
+        }
+    });
 }
 
 // Render Side Navigation
@@ -289,10 +307,18 @@ function renderItems(category, container) {
         // 存在する画像があればそれを使い、無ければダミー画像を使う
         const bgImgUrl = availableImages.includes(item.img) ? item.img : dummyImgUrl;
 
+        const escapedName = item.name.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+        const isReception = !!category.isReception;
+        const allowQuantity = !!item.allowQuantity;
+
+        // カードタイトル横に拡大ボタンを配置
         card.innerHTML = `
             <div class="card-img" style="background-image: url('${bgImgUrl}')"></div>
             <div class="card-body">
-                <div class="card-title">${item.name}</div>
+                <div class="card-header-row" style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 10px;">
+                    <div class="card-title" style="margin-bottom: 0;">${item.name}</div>
+                    <button class="expand-btn" onclick="event.stopPropagation(); openImageModal('${bgImgUrl}', '${escapedName}', ${item.price}, ${isReception}, ${allowQuantity})" style="padding: 4px 8px; font-size: 0.8rem; background: #e0e0e0; border: none; border-radius: 4px; cursor: pointer; white-space: nowrap; margin-left: 10px;">拡大表示</button>
+                </div>
                 <div class="card-price">${displayPrice.toLocaleString()}${priceSuffix}</div> 
                 ${controlHtml}
             </div>
@@ -364,6 +390,34 @@ window.updateItemQuantity = function (categoryId, itemId, delta) {
     }
 
     updateUI();
+};
+
+// Open Image Modal
+window.openImageModal = function (imgUrl, title, price, isReception, allowQuantity) {
+    if (!itemModalEl) return;
+
+    modalImgEl.src = imgUrl;
+    modalTitleEl.innerHTML = title;
+
+    let priceSuffix = '円';
+    if (isReception) priceSuffix = '円 / 人';
+    else if (allowQuantity) priceSuffix = '円 / 個';
+
+    modalPriceEl.textContent = price.toLocaleString() + priceSuffix;
+    modalDescEl.textContent = ''; // Could pass description if available
+
+    itemModalEl.classList.remove('hidden');
+    // Hide scrolling on body
+    document.body.style.overflow = 'hidden';
+};
+
+// Close Image Modal
+window.closeModal = function () {
+    if (itemModalEl) {
+        itemModalEl.classList.add('hidden');
+        document.body.style.overflow = 'hidden'; // Actually, in index.css body is already hidden, main-content is scrollable. 
+        // We probably don't need to change body.overflow if body doesn't scroll.
+    }
 };
 
 // Update Attendee Count
