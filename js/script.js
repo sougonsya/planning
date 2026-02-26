@@ -266,8 +266,26 @@ function renderItems(category, container) {
             controlHtml = `<div class="fixed-label">必須項目</div>`;
         }
 
+        // ひとまずダミー画像を表示する
+        const cleanName = item.name.replace(/<[^>]*>/g, '');
+        const dummyImgUrl = `https://placehold.jp/e0e0e0/555555/400x300.png?text=${encodeURIComponent(cleanName)}`;
+
+        // 存在する画像ファイルのリスト（手動定義）
+        const availableImages = [
+            'assets/images/encoffin_1.jpg',
+            'assets/images/encoffin_2.jpg',
+            'assets/images/encoffin_3.jpg',
+            'assets/images/flower_1.jpg',
+            'assets/images/opt_fruit.jpg',
+            'assets/images/opt_stand1.jpg',
+            'assets/images/opt_stand2.jpg'
+        ];
+
+        // 存在する画像があればそれを使い、無ければダミー画像を使う
+        const bgImgUrl = availableImages.includes(item.img) ? item.img : dummyImgUrl;
+
         card.innerHTML = `
-            <div class="card-img" style="background-image: url('${item.img}')"></div>
+            <div class="card-img" style="background-image: url('${bgImgUrl}')"></div>
             <div class="card-body">
                 <div class="card-title">${item.name}</div>
                 <div class="card-price">${displayPrice.toLocaleString()}${priceSuffix}</div> 
