@@ -307,19 +307,25 @@ function renderItems(category, container) {
         // 存在する画像があればそれを使い、無ければダミー画像を使う
         const bgImgUrl = availableImages.includes(item.img) ? item.img : dummyImgUrl;
 
-        // 名前のエスケープ処理（onclick属性用）
         const escapedName = item.name.replace(/'/g, "\\'").replace(/"/g, '&quot;');
         const isReception = !!category.isReception;
         const allowQuantity = !!item.allowQuantity;
 
         card.innerHTML = `
-            <div class="card-img" style="background-image: url('${bgImgUrl}')" onclick="event.stopPropagation(); openImageModal('${bgImgUrl}', '${escapedName}', ${item.price}, ${isReception}, ${allowQuantity})"></div>
+            <div class="card-img" style="background-image: url('${bgImgUrl}')"></div>
             <div class="card-body">
                 <div class="card-title">${item.name}</div>
                 <div class="card-price">${displayPrice.toLocaleString()}${priceSuffix}</div> 
                 ${controlHtml}
             </div>
         `;
+
+        // 画像クリック時のイベントリスナーを追加
+        const imgEl = card.querySelector('.card-img');
+        imgEl.addEventListener('click', (e) => {
+            e.stopPropagation(); // イベントが親要素（card）に伝わるのを防ぐ
+            openImageModal(bgImgUrl, item.name, item.price, isReception, allowQuantity);
+        });
 
         if (!item.fixed && !item.allowQuantity) {
             card.onclick = () => toggleSelection(category.id, item);
