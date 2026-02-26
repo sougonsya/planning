@@ -233,6 +233,13 @@ body {
     background-repeat: no-repeat;
     /* 背景画像としてのサイズ調整も cover を指定する */
     background-size: cover;
+    /* クリック可能であることを示す */
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.card-img:hover {
+    opacity: 0.9;
 }
 
 .card-body {
@@ -473,7 +480,8 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.7);
+    /* 少し暗くする */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -485,16 +493,50 @@ body {
     padding: 30px;
     border-radius: 12px;
     max-width: 600px;
+    /* 拡大表示用に少し大きくしても良いが今回は600px */
     width: 90%;
     position: relative;
+    text-align: center;
+    /* 中央揃え */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    max-height: 90vh;
+    /* 画面に収める */
+    overflow-y: auto;
+}
+
+#modal-img {
+    max-width: 100%;
+    max-height: 60vh;
+    object-fit: contain;
+    /* 画像全体が見えるように */
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+#modal-title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+#modal-price {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    font-weight: bold;
 }
 
 .close-modal {
     position: absolute;
     top: 15px;
     right: 20px;
-    font-size: 2rem;
+    font-size: 2.5rem;
     cursor: pointer;
+    color: #333;
+    line-height: 1;
+    z-index: 10;
+}
+
+.close-modal:hover {
+    color: var(--primary-color);
 }
 
 /* Responsive */
