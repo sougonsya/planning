@@ -207,8 +207,13 @@ body {
 .card-img {
     height: 180px;
     width: 100%;
-    object-fit: cover;
-    background-color: #e0e0e0;
+    /* 写真の種類によって見切れ方が変わるのを防ぎ、全体が収まるようにする */
+    object-fit: contain;
+    background-color: #f4f4f4;
+    background-position: center;
+    background-repeat: no-repeat;
+    /* 背景画像としてのサイズ調整を追加 */
+    background-size: contain;
 }
 
 .card-body {
