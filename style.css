@@ -1,0 +1,654 @@
+/* Reset & Base Styles */
+:root {
+    --primary-color: #6A5ACD;
+    /* SlateBlue - Calm & Respectful */
+    --secondary-color: #483D8B;
+    /* DarkSlateBlue */
+    --accent-color: #FFD700;
+    /* Gold - For highlights */
+    --text-color: #333;
+    --light-gray: #f4f4f4;
+    --border-color: #ddd;
+    --white: #fff;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background-color: #f9f9f9;
+    color: var(--text-color);
+    line-height: 1.6;
+    height: 100vh;
+    overflow: hidden;
+    /* Prevent body scroll, handle in main */
+}
+
+/* Layout */
+.app-container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 200px;
+    min-width: 200px;
+    /* Prevent shrinking */
+    flex-shrink: 0;
+    /* Prevent shrinking */
+    background-color: var(--white);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+    z-index: 10;
+}
+
+.logo-area {
+    padding: 0 20px 20px;
+    border-bottom: 1px solid var(--border-color);
+    text-align: center;
+}
+
+.logo-area h1 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 1.5rem;
+    color: var(--secondary-color);
+}
+
+.category-nav {
+    list-style: none;
+    margin-top: 20px;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.category-nav li {
+    padding: 15px 20px;
+    cursor: pointer;
+    font-weight: 500;
+    border-left: 4px solid transparent;
+    transition: var(--transition);
+}
+
+.category-nav li:hover {
+    background-color: var(--light-gray);
+}
+
+.category-nav li.active {
+    background-color: #e6e6fa;
+    /* Lavender */
+    color: var(--primary-color);
+    border-left-color: var(--primary-color);
+    font-weight: 700;
+}
+
+/* Main Content */
+.main-content {
+    flex-grow: 1;
+    padding: 20px 40px 100px;
+    /* Bottom padding for footer */
+    overflow-y: scroll;
+    /* Always show scrollbar to prevent layout shift */
+    background-color: #fcfcfc;
+}
+
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--light-gray);
+}
+
+.content-header h2 {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 2rem;
+    color: var(--secondary-color);
+}
+
+.step-indicator {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #888;
+}
+
+#current-step {
+    color: var(--primary-color);
+    font-size: 1.5rem;
+}
+
+/* Grid Layout */
+.items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+/* Item Card */
+.item-card {
+    background: var(--white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    border: 2px solid transparent;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.item-card.wide {
+    grid-column: 1 / -1;
+    /* Span full width */
+    flex-direction: row;
+    /* Horizontal layout */
+    min-height: 250px;
+}
+
+.item-card.wide .card-img {
+    width: 40%;
+    height: auto;
+}
+
+/* Narrow/Tall style for specific categories */
+.item-card.narrow {
+    /* デフォルトの 280px より細くする */
+    grid-column: span 1;
+    min-height: 420px;
+    /* 縦をさらに伸ばす */
+}
+
+.item-card.narrow .card-img {
+    height: 280px;
+    /* 画像部分の縦幅もさらに伸ばす */
+}
+
+/* Grid Layout overrides for narrow items */
+.items-grid:has(.item-card.narrow) {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    /* 細いカード用にグリッド幅を調整 */
+}
+
+.item-card.wide .card-body {
+    width: 60%;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.item-card.wide .card-title {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 10px;
+    display: inline-block;
+}
+
+.item-card.wide small {
+    display: block;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    background: #fdfdfd;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px dashed #ccc;
+    margin-bottom: 20px;
+}
+
+.item-card.wide .card-price {
+    font-size: 2rem;
+    color: var(--primary-color);
+}
+
+.item-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
+}
+
+.item-card.selected {
+    border-color: var(--primary-color);
+    background-color: #f0f8ff;
+}
+
+.card-img {
+    height: 180px;
+    width: 100%;
+    /* 写真がカードの枠いっぱいに表示されるように cover を指定する */
+    object-fit: cover;
+    background-color: #f4f4f4;
+    background-position: center;
+    background-repeat: no-repeat;
+    /* 背景画像としてのサイズ調整も cover を指定する */
+    background-size: cover;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.card-title {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.card-price {
+    font-size: 1.4rem;
+    color: var(--secondary-color);
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.select-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: var(--white);
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    border-radius: 6px;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+/* Quantity Controls */
+.item-quantity-control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #f0f8ff;
+    padding: 5px;
+    border-radius: 6px;
+    border: 1px solid var(--primary-color);
+}
+
+.qty-btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    background: var(--white);
+    color: var(--primary-color);
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.qty-btn:hover {
+    background: var(--primary-color);
+    color: var(--white);
+}
+
+.qty-val {
+    font-size: 1.2rem;
+    font-weight: bold;
+    min-width: 30px;
+    text-align: center;
+}
+
+.fixed-label {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #f0f0f0;
+    color: #555;
+    border-radius: 6px;
+    text-align: center;
+    font-weight: 600;
+}
+
+/* Footer */
+.app-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    /* Full width */
+    right: 0;
+    background-color: var(--white);
+    padding: 0 40px;
+    /* Removed vertical padding, handled by flex/height */
+    height: 80px;
+    /* Fixed height */
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    box-sizing: border-box;
+}
+
+.order-summary {
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+}
+
+.summary-label {
+    font-size: 1.2rem;
+    font-weight: 500;
+    white-space: nowrap;
+    /* Prevent wrapping */
+}
+
+.total-price {
+    font-size: 1.8rem;
+    /* Reduced from 2.5rem */
+    font-weight: 700;
+    color: var(--secondary-color);
+}
+
+.currency {
+    font-size: 1.2rem;
+    /* Reduced from 1.5rem */
+    margin-left: 5px;
+}
+
+.tax-note {
+    font-size: 0.9rem;
+    color: #888;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.btn {
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    /* Reduced font size */
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    transition: var(--transition);
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--white);
+    box-shadow: 0 4px 6px rgba(106, 90, 205, 0.3);
+}
+
+.btn-primary:hover {
+    background-color: var(--secondary-color);
+}
+
+.btn-secondary {
+    background-color: #e0e0e0;
+    color: #555;
+}
+
+.btn-secondary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Reception Area */
+.reception-container {
+    padding: 20px 0;
+}
+
+.attendees-control {
+    background: var(--white);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.attendees-control h3 {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.stepper {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: #f0f0f0;
+    padding: 10px;
+    border-radius: 50px;
+}
+
+.stepper-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    background: var(--white);
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.1s;
+}
+
+.stepper-btn:active {
+    transform: scale(0.95);
+}
+
+.stepper-value {
+    font-size: 2rem;
+    font-weight: 700;
+    min-width: 80px;
+    text-align: center;
+}
+
+.unit {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+/* Hidden Class */
+.hidden {
+    display: none !important;
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: var(--white);
+    padding: 30px;
+    border-radius: 12px;
+    max-width: 600px;
+    width: 90%;
+    position: relative;
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .app-container {
+        flex-direction: column;
+        overflow-y: auto;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        overflow-x: auto;
+        padding: 0;
+        position: sticky;
+        top: 0;
+        z-index: 90;
+        background: var(--white);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        -webkit-overflow-scrolling: touch;
+        white-space: nowrap;
+    }
+
+    .logo-area {
+        display: none;
+        /* Hide logo on mobile to save space, or make smaller */
+    }
+
+    .category-nav {
+        display: flex;
+        margin-top: 0;
+    }
+
+    .category-nav li {
+        white-space: nowrap;
+        border-bottom: 4px solid transparent;
+        border-left: none;
+    }
+
+    .category-nav li.active {
+        border-bottom-color: var(--primary-color);
+        background-color: #f0f8ff;
+    }
+
+    .main-content {
+        padding: 20px 15px 200px;
+        /* Increased bottom padding to prevent footer overlap */
+    }
+
+    .content-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .items-grid {
+        grid-template-columns: 1fr;
+        /* Single column on mobile */
+        gap: 20px;
+    }
+
+    .item-card.wide {
+        flex-direction: column;
+        min-height: auto;
+    }
+
+    .item-card.wide .card-img {
+        width: 100%;
+        height: 150px;
+    }
+
+    .item-card.wide .card-body {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .item-card.wide .card-title {
+        font-size: 1.4rem;
+        margin-bottom: 10px;
+    }
+
+    .item-card.wide .card-price {
+        font-size: 1.6rem;
+    }
+
+    .select-btn {
+        padding: 14px;
+        /* Larger touch target */
+        font-size: 1.1rem;
+    }
+
+    .app-footer {
+        left: 0;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 10px;
+        padding: 10px 15px;
+        align-items: center;
+        background: var(--white);
+        /* Solid background */
+        border-top: 1px solid #eee;
+    }
+
+    .order-summary {
+        grid-column: 1 / -1;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 5px;
+    }
+
+    .summary-label {
+        font-size: 1rem;
+    }
+
+    .total-price {
+        font-size: 1.6rem;
+    }
+
+    .currency {
+        font-size: 1rem;
+    }
+
+    .action-buttons {
+        grid-column: 1 / -1;
+        width: 100%;
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn {
+        flex: 1;
+        padding: 12px;
+        font-size: 1rem;
+        height: 50px;
+        /* Consistent height */
+    }
+}
+
+@media print {
+
+    .sidebar,
+    .app-footer,
+    .step-indicator,
+    .logo-area {
+        display: none;
+    }
+
+    .main-content {
+        padding: 0;
+        overflow: visible;
+    }
+
+    .app-container {
+        height: auto;
+        display: block;
+    }
+}
