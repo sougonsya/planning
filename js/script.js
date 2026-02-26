@@ -302,6 +302,8 @@ function renderItems(category, container) {
             'assets/images/opt_fruit.jpg',
             'assets/images/opt_stand1.jpg',
             'assets/images/opt_stand2.jpg',
+            'assets/images/opt_bus.jpg',
+            'assets/images/opt_sakaki.jpg',
             'assets/images/coffin_1.jpg',
             'assets/images/coffin_2.jpg',
             'assets/images/coffin_3.jpg',
@@ -309,6 +311,9 @@ function renderItems(category, container) {
             'assets/images/coffin_5.jpg',
             'assets/images/coffin_6.jpg',
             'assets/images/opt_flower.jpg'
+            'assets/images/rec_food.jpg'
+            'assets/images/rec_gift.jpg'
+
         ];
 
         // 存在する画像があればそれを使い、無ければダミー画像を使う
