@@ -696,3 +696,119 @@ body {
         display: block;
     }
 }
+
+/* Start Screen Styles */
+.start-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, #fdfdfd 0%, #eef2f3 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000; /* Above everything else */
+    overflow-y: auto;
+}
+
+.start-content {
+    background: var(--white);
+    padding: 50px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    max-width: 1000px;
+    width: 90%;
+    text-align: center;
+}
+
+.start-title {
+    font-family: 'Shippori Mincho', serif;
+    font-size: 2.2rem;
+    color: var(--secondary-color);
+    margin-bottom: 10px;
+}
+
+.start-desc {
+    color: #666;
+    margin-bottom: 40px;
+    font-size: 1.1rem;
+}
+
+.plan-cards {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.plan-card {
+    flex: 1;
+    background: #fcfcfc;
+    border: 2px solid var(--border-color);
+    border-radius: 15px;
+    padding: 30px 20px;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.plan-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--primary-color);
+    box-shadow: 0 15px 25px rgba(106, 90, 205, 0.15);
+    background: #f9f8ff;
+}
+
+.plan-icon {
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+}
+
+.plan-name {
+    font-size: 1.6rem;
+    color: var(--text-color);
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.plan-detail {
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.5;
+}
+
+.start-skip-btn {
+    padding: 12px 30px;
+    font-size: 1.1rem;
+    background-color: transparent;
+    color: #888;
+    border: 1px solid #ccc;
+}
+
+.start-skip-btn:hover {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+@media (max-width: 768px) {
+    .start-content {
+        padding: 30px 20px;
+        margin: 20px 0;
+    }
+    
+    .start-title {
+        font-size: 1.6rem;
+    }
+    
+    .plan-cards {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .plan-card {
+        padding: 20px;
+    }
+}

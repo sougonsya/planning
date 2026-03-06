@@ -7,19 +7,52 @@
     <title>葬儀プランシミュレーション</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link
-        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho:wght@400;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&amp;family=Shippori+Mincho:wght@400;700&amp;display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
-    <div class="app-container">
+<body class="">
+    <div id="start-screen" class="start-screen">
+        <div class="start-content">
+            <h1 class="start-title">ご希望の葬儀形式をお選びください</h1>
+            <p class="start-desc">選択したプランに合わせたおすすめの構成でシミュレーションを開始します。</p>
+
+            <div class="plan-cards">
+                <!-- Family Funeral -->
+                <div class="plan-card" onclick="selectFuneralType('family')">
+                    <h2 class="plan-name">家族葬</h2>
+                    <p class="plan-detail">ご家族や親しい方々だけで温かく見送るプランです。</p>
+                </div>
+
+                <!-- One-day Funeral -->
+                <div class="plan-card" onclick="selectFuneralType('oneday')">
+                    <h2 class="plan-name">一日葬</h2>
+                    <p class="plan-detail">お通夜を行わず、告別式から火葬までを1日で行うプランです。</p>
+                </div>
+
+                <!-- Cremation Only -->
+                <div class="plan-card" onclick="selectFuneralType('cremation')">
+                    <h2 class="plan-name">火葬式</h2>
+                    <p class="plan-detail">儀式を行わず、ごく親しい方のみで火葬のみを行うシンプルなプランです。</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Main Simulator App (Initially Hidden) -->
+    <div id="app-container" class="app-container hidden">
         <!-- Sidebar Navigation -->
         <nav class="sidebar">
-            <div class="logo-area">
-                <h1>御見積</h1>
+            <div class="logo-area"
+                style="text-align: center; display: flex; flex-direction: column; gap: 10px; padding-bottom: 5px;">
+                <button onclick="returnToStartScreen()" class="btn btn-secondary btn-sm"
+                    style="font-size: 0.8rem; padding: 6px 10px; width: 100%; box-sizing: border-box;">＜
+                    プラン選択へ戻る</button>
+                <h1 style="margin: 0; font-size: 1.5rem;">御見積</h1>
             </div>
             <ul id="category-list" class="category-nav">
                 <!-- Categories will be injected by JS -->
@@ -28,9 +61,10 @@
 
         <!-- Main Content Area -->
         <main class="main-content">
-            <header class="content-header">
-                <h2 id="current-category-title">カテゴリー名</h2>
-                <div class="step-indicator">
+            <header class="content-header" style="position: relative;">
+                <h2 id="current-category-title" style="margin: 0 auto; text-align: center;">カテゴリー名</h2>
+                <div class="step-indicator"
+                    style="position: absolute; right: 0; top: 50%; transform: translateY(-50%);">
                     <span id="current-step">1</span> / <span id="total-steps">8</span>
                 </div>
             </header>
@@ -45,7 +79,7 @@
                     <h3>会葬者人数</h3>
                     <div class="stepper">
                         <button id="btn-decrease" class="stepper-btn">-</button>
-                        <span id="attendee-count" class="stepper-value">10</span>
+                        <span id="attendee-count" class="stepper-value">5</span>
                         <span class="unit">名</span>
                         <button id="btn-increase" class="stepper-btn">+</button>
                     </div>
@@ -61,15 +95,15 @@
             <div class="order-summary">
                 <div class="summary-label">現在の概算費用</div>
                 <div class="total-price">
-                    <span id="total-amount">0</span>
+                    <span id="total-amount">200,000</span>
                     <span class="currency">円</span>
                     <span class="tax-note">（税込）</span>
                 </div>
             </div>
             <div class="action-buttons">
-                <button id="btn-prev" class="btn btn-secondary" disabled>戻る</button>
+                <button id="btn-prev" class="btn btn-secondary">戻る</button>
                 <button id="btn-estimate" class="btn btn-info"
-                    style="margin-right: 10px; background-color: #17a2b8; color: white; border: none;">見積書作成</button>
+                    style="margin-right: 10px; background-color: rgb(23, 162, 184); color: white; border: none;">見積書作成</button>
                 <button id="btn-next" class="btn btn-primary">次へ</button>
             </div>
         </footer>
@@ -89,6 +123,8 @@
     </div>
 
     <script src="js/script.js"></script>
+
+
 </body>
 
 </html>

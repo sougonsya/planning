@@ -5,10 +5,11 @@ const categories = [
         name: '祭壇',
         title: '祭壇をお選びください',
         items: [
+            { id: 'altar-1', name: '祭壇（10万）', price: 100000, img: 'assets/images/altar_1.jpg', onlyForFixed: ['fixed-oneday-sora'] },
             { id: 'altar-2', name: '祭壇（20万）', price: 200000, img: 'assets/images/altar_2.jpg' },
-            { id: 'altar-3', name: '祭壇（30万）', price: 300000, img: 'assets/images/altar_3.jpg' },
-            { id: 'altar-4', name: '祭壇（50万）', price: 500000, img: 'assets/images/altar_4.jpg' },
-            { id: 'altar-5', name: '祭壇（80万）', price: 800000, img: 'assets/images/altar_5.jpg' }
+            { id: 'altar-3', name: '祭壇（30万）', price: 300000, img: 'assets/images/altar_3.jpg', excludeForFixed: ['fixed-oneday-sora'] },
+            { id: 'altar-4', name: '祭壇（50万）', price: 500000, img: 'assets/images/altar_4.jpg', excludeForFixed: ['fixed-oneday-sora'] },
+            { id: 'altar-5', name: '祭壇（80万）', price: 800000, img: 'assets/images/altar_5.jpg', excludeForFixed: ['fixed-oneday-sora'] }
         ]
     },
     {
@@ -16,12 +17,12 @@ const categories = [
         name: '棺',
         title: '棺をお選びください',
         items: [
-            { id: 'coffin-1', name: '平棺', price: 50000, img: 'assets/images/coffin_1.jpg' },
-            { id: 'coffin-2', name: '布（白）', price: 80000, img: 'assets/images/coffin_2.jpg' },
-            { id: 'coffin-3', name: '布（桃）', price: 80000, img: 'assets/images/coffin_3.jpg' },
-            { id: 'coffin-4', name: '刺繍（白）', price: 100000, img: 'assets/images/coffin_4.jpg' },
-            { id: 'coffin-5', name: '刺繍（桃）', price: 100000, img: 'assets/images/coffin_5.jpg' },
-            { id: 'coffin-6', name: '刺繍（黒）', price: 100000, img: 'assets/images/coffin_6.jpg' }
+            { id: 'coffin-1', name: '平棺', price: 50000, img: 'assets/images/coffin_1.png' },
+            { id: 'coffin-2', name: '布（白）', price: 80000, img: 'assets/images/coffin_2.png' },
+            { id: 'coffin-3', name: '布（桃）', price: 80000, img: 'assets/images/coffin_3.png' },
+            { id: 'coffin-4', name: '刺繍（白）', price: 100000, img: 'assets/images/coffin_4.png' },
+            { id: 'coffin-5', name: '刺繍（桃）', price: 100000, img: 'assets/images/coffin_5.png' },
+            { id: 'coffin-6', name: '刺繍（黒）', price: 100000, img: 'assets/images/coffin_6.png' }
         ]
     },
     {
@@ -45,7 +46,7 @@ const categories = [
         title: '遺影写真が必要な場合は選択してください',
         items: [
             // { id: 'photo-0', name: '無し', price: 0, img: 'assets/images/photo_0.jpg' }, // Removed
-            { id: 'photo-1', name: '有り（カラー）', price: 20000, img: 'assets/images/photo_1.jpg' }
+            { id: 'photo-1', name: '有り（カラー）', price: 20000, img: 'assets/images/pic.webp' }
         ]
     },
     {
@@ -54,7 +55,7 @@ const categories = [
         title: '枕花が必要な場合は選択してください',
         items: [
             // { id: 'pillow-0', name: '無し', price: 0, img: 'assets/images/flower_0.jpg' }, // Removed
-            { id: 'pillow-1', name: '有り', price: 10000, img: 'assets/images/flower_1.jpg' }
+            { id: 'pillow-1', name: '有り', price: 10000, img: 'assets/images/flower_1.png' }
         ]
     },
     {
@@ -83,10 +84,31 @@ const categories = [
         items: [
             {
                 id: 'fixed-set',
-                name: '【固定費用一式】<br><span style="font-size: 0.9rem; color: #d9534f; display: block; margin: 5px 0;">※ご葬儀を行う上で必須となる項目になります。</span><small>装具一式・供物一式・ご遺体保全（2日分）・奉仕料・搬送布団・寝台車（10kmまで）・斎場使用料</small>',
+                name: '【家族葬プラン】<br><span style="font-size: 0.9rem; color: #d9534f; display: block; margin: 5px 0;">※ご葬儀を行う上で必須となる項目になります。</span><small>装具一式・供物一式・ご遺体保全（2日分）・奉仕料・搬送布団・寝台車（10kmまで）・斎場使用料</small>',
                 price: 178000,
-                img: 'assets/images/fixed_set.jpg',
+                img: 'assets/images/koteihi.webp',
                 fixed: true
+            },
+            {
+                id: 'fixed-oneday-sora',
+                name: '【一日葬プラン【空】】<br><span style="font-size: 0.9rem; color: #d9534f; display: block; margin: 5px 0;">※一日葬の必須項目になります。</span><small>装具一式・供物一式・ご遺体保全（2日分）・奉仕料・搬送布団・寝台車（10kmまで）・斎場使用料</small>',
+                price: 135000,
+                img: 'assets/images/koteihi.webp',
+                fixedGroup: 'oneday'
+            },
+            {
+                id: 'fixed-oneday-akari',
+                name: '【一日葬プラン【灯】】<br><span style="font-size: 0.9rem; color: #d9534f; display: block; margin: 5px 0;">※一日葬の必須項目になります。</span><small>装具一式・供物一式・ご遺体保全（2日分）・奉仕料・搬送布団・寝台車（10kmまで）・斎場使用料</small>',
+                price: 155000,
+                img: 'assets/images/koteihi.webp',
+                fixedGroup: 'oneday'
+            },
+            {
+                id: 'fixed-cremation',
+                name: '【火葬式プラン】<br><span style="font-size: 0.9rem; color: #d9534f; display: block; margin: 5px 0;">※火葬式の必須項目になります。</span><small>装具一式・ご遺体保全（2日分）・奉仕料・搬送布団・寝台車（10kmまで）</small>',
+                price: 110000,
+                img: 'assets/images/koteihi2.webp',
+                fixedGroup: 'cremation'
             }
         ]
     },
@@ -97,9 +119,9 @@ const categories = [
         items: [
             { id: 'opt-sakaki', name: '榊<br><span style="font-size: 0.8rem; color: #d9534f;">※神道の方は必須となります</span>', price: 1000, img: 'assets/images/opt_sakaki.jpg', allowQuantity: true },
             { id: 'opt-dryice', name: 'ドライアイス（1日分）', price: 10000, img: 'assets/images/opt_dryice.jpg', allowQuantity: true },
-            { id: 'opt-stand-1', name: 'スタンド花 1段', price: 15000, img: 'assets/images/opt_stand1.jpg', allowQuantity: true },
-            { id: 'opt-stand-2', name: 'スタンド花 2段', price: 20000, img: 'assets/images/opt_stand2.jpg', allowQuantity: true },
-            { id: 'opt-fruit', name: '果物籠', price: 12000, img: 'assets/images/opt_fruit.jpg', allowQuantity: true },
+            { id: 'opt-stand-1', name: 'スタンド花 1段', price: 15000, img: 'assets/images/opt_stand1.png', allowQuantity: true },
+            { id: 'opt-stand-2', name: 'スタンド花 2段', price: 20000, img: 'assets/images/opt_stand2.png', allowQuantity: true },
+            { id: 'opt-fruit', name: '果物籠', price: 12000, img: 'assets/images/opt_fruit.png', allowQuantity: true },
             { id: 'opt-incense', name: '線香ローソクセット', price: 10000, img: 'assets/images/opt_incense.jpg', allowQuantity: true },
             { id: 'opt-coffin-flower', name: '棺上飾り花', price: 15000, img: 'assets/images/opt_flower.jpg' },
             { id: 'opt-microbus', name: 'マイクロバス', price: 35000, img: 'assets/images/opt_bus.jpg' }
@@ -120,6 +142,7 @@ const categories = [
 
 // App State
 let state = {
+    funeralType: 'custom', // 'family', 'oneday', 'cremation', or 'custom'
     currentCategoryIndex: 0,
     selections: {}, // { categoryId: { itemId: itemData, quantity: 1 } }
     attendees: 10
@@ -149,17 +172,7 @@ const closeModalBtn = document.querySelector('.close-modal');
 
 // Initialize
 function init() {
-    // Auto-select fixed items
-    categories.forEach(cat => {
-        cat.items.forEach(item => {
-            if (item.fixed) {
-                toggleSelection(cat.id, item);
-            }
-        });
-    });
-
-    renderCategoryNav();
-    updateUI();
+    // The app container is initially hidden. Wait for user selection.
 
     // Global Event Listeners
     document.getElementById('btn-increase').addEventListener('click', () => updateAttendees(1));
@@ -178,10 +191,74 @@ function init() {
     });
 }
 
+// Handle Funeral Type Selection
+window.selectFuneralType = function (type) {
+    // Hide start screen, show app
+    document.getElementById('start-screen').classList.add('hidden');
+    document.getElementById('app-container').classList.remove('hidden');
+
+    state.selections = {}; // Reset selections
+    state.attendees = 10;  // Default
+    state.currentCategoryIndex = 0; // Reset category index
+    state.funeralType = type; // Store the selected type
+
+    // Set attendees and initial category based on Type
+    if (type === 'family') {
+        state.attendees = 20;
+    } else if (type === 'oneday') {
+        state.attendees = 10;
+    } else if (type === 'cremation') {
+        state.attendees = 5;
+        state.currentCategoryIndex = 1; // Skip 'altar' (index 0) for cremation
+    }
+
+    // Auto-select fixed items based on type
+    const fixedCategory = categories.find(c => c.id === 'fixed-costs');
+    if (fixedCategory) {
+        state.selections['fixed-costs'] = {};
+        if (type === 'oneday') {
+            const item = fixedCategory.items.find(i => i.id === 'fixed-oneday-sora');
+            state.selections['fixed-costs'][item.id] = { ...item, quantity: 1 };
+        } else if (type === 'cremation') {
+            const item = fixedCategory.items.find(i => i.id === 'fixed-cremation');
+            state.selections['fixed-costs'][item.id] = { ...item, quantity: 1 };
+        } else {
+            // family and custom default to standard fixed set
+            const item = fixedCategory.items.find(i => i.id === 'fixed-set');
+            state.selections['fixed-costs'][item.id] = { ...item, quantity: 1 };
+        }
+    }
+    // 'custom' does nothing, just goes to step 1 with fixed items selected
+
+    attendeeCountEl.textContent = state.attendees;
+
+    // Resume standard initialization
+    renderCategoryNav();
+    updateUI();
+};
+
+// Helper for preset logic
+function applyPresetSelection(categoryId, itemId) {
+    const category = categories.find(c => c.id === categoryId);
+    if (!category) return;
+    const item = category.items.find(i => i.id === itemId);
+    if (!item) return;
+
+    if (!state.selections[categoryId]) {
+        state.selections[categoryId] = {};
+    }
+    state.selections[categoryId][item.id] = { ...item, quantity: 1 };
+}
+
 // Render Side Navigation
 function renderCategoryNav() {
     categoryListEl.innerHTML = '';
     categories.forEach((cat, index) => {
+        // Skip 'altar' for cremation
+        if (state.funeralType === 'cremation' && cat.id === 'altar') {
+            return;
+        }
+
         const li = document.createElement('li');
         li.textContent = cat.name;
         li.onclick = () => jumpToCategory(index);
@@ -194,33 +271,64 @@ function renderCategoryNav() {
 
 // Update UI based on state
 function updateUI() {
+    // If we land on 'altar' and cremation is active, skip to next/prev depending on direction
     const currentCat = categories[state.currentCategoryIndex];
-
-    // Update Header
-    currentCategoryTitleEl.innerHTML = currentCat.title;
-    currentStepEl.textContent = state.currentCategoryIndex + 1;
-    totalStepsEl.textContent = categories.length;
-
-    // Update Nav Active State
-    const navItems = categoryListEl.children;
-    for (let i = 0; i < navItems.length; i++) {
-        navItems[i].classList.toggle('active', i === state.currentCategoryIndex);
+    if (state.funeralType === 'cremation' && currentCat.id === 'altar') {
+        // If index is 0, we should skip forward to 1.
+        // It's mostly edge case. Wait, if index is 0, just push it to 1 and re-render.
+        if (state.currentCategoryIndex === 0) {
+            state.currentCategoryIndex = 1;
+            return updateUI(); // Re-run with new category
+        }
     }
 
+    const activeNavCat = categories[state.currentCategoryIndex];
+
+    // Update Header
+    let catTitle = activeNavCat.title;
+    if (activeNavCat.id === 'altar' && state.funeralType === 'oneday') {
+        catTitle += '<br><small style="font-size: 0.9rem; color: #d9534f; font-weight: normal;">※祭壇（10万）は一日葬プラン【空】のみ選択可能です</small>';
+    }
+    currentCategoryTitleEl.innerHTML = catTitle;
+
+    // Update Nav Active State and calculate Step indicator
+    const navItems = categoryListEl.children;
+    let visibleIndex = 0;
+    let activeVisibleIndex = 0;
+
+    for (let i = 0; i < categories.length; i++) {
+        // Skip 'altar' for cremation
+        if (state.funeralType === 'cremation' && categories[i].id === 'altar') {
+            continue;
+        }
+
+        if (navItems[visibleIndex]) {
+            const isActive = (i === state.currentCategoryIndex);
+            navItems[visibleIndex].classList.toggle('active', isActive);
+            if (isActive) {
+                activeVisibleIndex = visibleIndex;
+            }
+        }
+        visibleIndex++;
+    }
+
+    currentStepEl.textContent = activeVisibleIndex + 1;
+    totalStepsEl.textContent = visibleIndex;
+
     // Show/Hide Reception Items Layout
-    if (currentCat.isReception) {
+    if (activeNavCat.isReception) {
         itemsGridEl.classList.add('hidden');
         receptionAreaEl.classList.remove('hidden');
-        renderItems(currentCat, receptionItemsGridEl);
+        renderItems(activeNavCat, receptionItemsGridEl);
     } else {
         itemsGridEl.classList.remove('hidden');
         receptionAreaEl.classList.add('hidden');
-        renderItems(currentCat, itemsGridEl);
+        renderItems(activeNavCat, itemsGridEl);
     }
 
     // Update Buttons
-    // Update Buttons
     btnPrev.disabled = state.currentCategoryIndex === 0;
+    btnPrev.textContent = '戻る';
 
     if (state.currentCategoryIndex === categories.length - 1) {
         btnNext.style.display = 'none'; // Hide on last step
@@ -230,7 +338,11 @@ function updateUI() {
     }
 
     // Conditional Estimate Button
-    const requiredCats = ['altar', 'coffin', 'urn', 'encoffinment', 'hearse'];
+    let requiredCats = ['altar', 'coffin', 'urn', 'encoffinment', 'hearse'];
+    if (state.funeralType === 'cremation') {
+        // Remove 'altar' from required selections for cremation
+        requiredCats = requiredCats.filter(id => id !== 'altar');
+    }
     const allSelected = requiredCats.every(id => state.selections[id] && Object.keys(state.selections[id]).length > 0);
 
     if (btnEstimate) {
@@ -243,12 +355,51 @@ function updateUI() {
 // Render Items Grid
 function renderItems(category, container) {
     container.innerHTML = '';
+
+    // Determine currently selected fixed cost ID to filter altars
+    let selectedFixedId = null;
+    if (state.selections['fixed-costs']) {
+        const keys = Object.keys(state.selections['fixed-costs']);
+        if (keys.length > 0) {
+            selectedFixedId = keys[0];
+        }
+    }
+
     category.items.forEach(item => {
+        // Enforce specific fixed-cost restrictions (mainly for altars)
+        if (item.onlyForFixed && !item.onlyForFixed.includes(selectedFixedId)) {
+            return;
+        }
+        if (item.excludeForFixed && item.excludeForFixed.includes(selectedFixedId)) {
+            return;
+        }
+        // Filter fixed costs based on funeralType
+        if (category.id === 'fixed-costs') {
+            if (state.funeralType === 'oneday') {
+                if (item.fixedGroup !== 'oneday') return;
+            } else if (state.funeralType === 'cremation') {
+                if (item.fixedGroup !== 'cremation') return;
+            } else {
+                if (!item.fixed) return; // For family/custom show only standard fixed set
+            }
+        }
+
+        // Filter options for cremation
+        if (category.id === 'options' && state.funeralType === 'cremation') {
+            const hiddenForCremation = [
+                'opt-stand-1', 'opt-stand-2',
+                'opt-fruit', 'opt-incense',
+                'opt-microbus', 'opt-sakaki',
+                'opt-coffin-flower'
+            ];
+            if (hiddenForCremation.includes(item.id)) return;
+        }
+
         const card = document.createElement('div');
         card.className = 'item-card';
 
         // Apply wide style for fixed items
-        if (item.fixed) {
+        if (item.fixed || item.fixedGroup) {
             card.classList.add('wide');
         }
 
@@ -285,7 +436,7 @@ function renderItems(category, container) {
                 </div>
             `;
         } // For fixed items, show nothing or just text
-        else if (item.fixed) {
+        else if (item.fixed || (item.fixedGroup === 'cremation' && state.funeralType === 'cremation')) {
             controlHtml = `<div class="fixed-label">必須項目</div>`;
         }
 
@@ -298,18 +449,18 @@ function renderItems(category, container) {
             'assets/images/encoffin_1.jpg',
             'assets/images/encoffin_2.jpg',
             'assets/images/encoffin_3.jpg',
-            'assets/images/flower_1.jpg',
-            'assets/images/opt_fruit.jpg',
-            'assets/images/opt_stand1.jpg',
-            'assets/images/opt_stand2.jpg',
+            'assets/images/flower_1.png',
+            'assets/images/opt_fruit.png',
+            'assets/images/opt_stand1.png',
+            'assets/images/opt_stand2.png',
             'assets/images/opt_bus.jpg',
             'assets/images/opt_sakaki.jpg',
-            'assets/images/coffin_1.jpg',
-            'assets/images/coffin_2.jpg',
-            'assets/images/coffin_3.jpg',
-            'assets/images/coffin_4.jpg',
-            'assets/images/coffin_5.jpg',
-            'assets/images/coffin_6.jpg',
+            'assets/images/coffin_1.png',
+            'assets/images/coffin_2.png',
+            'assets/images/coffin_3.png',
+            'assets/images/coffin_4.png',
+            'assets/images/coffin_5.png',
+            'assets/images/coffin_6.png',
             'assets/images/opt_flower.jpg',
             'assets/images/rec_food.jpg',
             'assets/images/rec_gift.jpg',
@@ -322,7 +473,12 @@ function renderItems(category, container) {
             'assets/images/urn_7.jpg',
             'assets/images/urn_8.jpg',
             'assets/images/hearse_1.jpg',
-            'assets/images/opt_dryice.jpg'
+            'assets/images/opt_dryice.jpg',
+            'assets/images/fixed_set.jpg',
+            'assets/images/koteihi.webp',
+            'assets/images/koteihi2.webp',
+            'assets/images/pic.webp',
+            'assets/images/altar_1.jpg'
         ];
 
         // 存在する画像があればそれを使い、無ければダミー画像を使う
@@ -345,7 +501,7 @@ function renderItems(category, container) {
             </div>
         `;
 
-        if (!item.fixed && !item.allowQuantity) {
+        if (!(item.fixed || item.fixedGroup) && !item.allowQuantity) {
             card.onclick = () => toggleSelection(category.id, item);
         } else if (item.allowQuantity && !isSelected) {
             card.onclick = () => toggleSelection(category.id, item);
@@ -353,6 +509,9 @@ function renderItems(category, container) {
             // If already selected and allows quantity, clicking card usually does nothing or deselects? 
             // Let's make it so clicking the card area (not buttons) toggles it off or does nothing.
             // For better UX, let's keep toggle behavior on card click, buttons handle quantity.
+            card.onclick = () => toggleSelection(category.id, item);
+        } else if (item.fixedGroup === 'oneday' && state.funeralType === 'oneday') {
+            // Allow selecting between 135k and 155k options
             card.onclick = () => toggleSelection(category.id, item);
         }
 
@@ -362,8 +521,19 @@ function renderItems(category, container) {
 
 // Toggle Item Selection
 function toggleSelection(categoryId, item) {
+    // Cannot deselect standard fixed items or mandatory cremation item
     if (item.fixed && state.selections[categoryId] && state.selections[categoryId][item.id]) {
-        return; // Cannot deselect fixed items
+        return;
+    }
+    if (item.fixedGroup === 'cremation' && state.funeralType === 'cremation') {
+        return;
+    }
+
+    // Reset Altar if changing fixed costs in one-day plan
+    if (categoryId === 'fixed-costs' && item.fixedGroup === 'oneday') {
+        if (!state.selections[categoryId] || !state.selections[categoryId][item.id]) {
+            state.selections['altar'] = {};
+        }
     }
 
     const category = categories.find(c => c.id === categoryId);
@@ -385,7 +555,14 @@ function toggleSelection(categoryId, item) {
         }
     } else {
         // Single select logic: clear others
-        if (state.selections[categoryId][item.id]) {
+        const isCurrentlySelected = state.selections[categoryId] && state.selections[categoryId][item.id];
+
+        // For 'oneday' fixed costs, preventing deselecting all items (must have one selected)
+        if (isCurrentlySelected && item.fixedGroup === 'oneday' && state.funeralType === 'oneday') {
+            return; // Cannot deselect the currently selected oneday fixed cost
+        }
+
+        if (isCurrentlySelected) {
             delete state.selections[categoryId][item.id];
         } else {
             state.selections[categoryId] = {}; // Clear previous
@@ -475,7 +652,12 @@ function updateTotalAmount() {
 function nextCategory() {
     if (state.currentCategoryIndex < categories.length - 1) {
         state.currentCategoryIndex++;
+        // Skip altar if cremation
+        if (state.funeralType === 'cremation' && categories[state.currentCategoryIndex].id === 'altar') {
+            state.currentCategoryIndex++;
+        }
         updateUI();
+        renderCategoryNav(); // Keep nav active state updated visually
     } else {
         alert('プラン作成が完了しました。合計金額: ' + totalAmountEl.textContent + '円');
     }
@@ -484,7 +666,26 @@ function nextCategory() {
 function prevCategory() {
     if (state.currentCategoryIndex > 0) {
         state.currentCategoryIndex--;
+        // Skip altar if cremation
+        if (state.funeralType === 'cremation' && categories[state.currentCategoryIndex].id === 'altar') {
+            state.currentCategoryIndex--;
+            if (state.currentCategoryIndex < 0) {
+                // Return to start screen if we skip before start
+                document.getElementById('app-container').classList.add('hidden');
+                document.getElementById('start-screen').classList.remove('hidden');
+                return;
+            }
+        }
         updateUI();
+        renderCategoryNav();
+    }
+}
+
+// Return to Start Screen
+window.returnToStartScreen = function () {
+    if (confirm('プラン選択画面に戻りますか？現在の選択状況はリセットされます。')) {
+        document.getElementById('app-container').classList.add('hidden');
+        document.getElementById('start-screen').classList.remove('hidden');
     }
 }
 
@@ -512,9 +713,12 @@ function generateEstimate() {
                 const match = item.name.match(/<small>(.*?)<\/small>/);
                 const noteText = match ? match[1] : '装具一式・供物一式・ご遺体保全（2日分）・奉仕料・搬送布団・寝台車（10kmまで）・斎場使用料';
 
+                // Get the clean name (e.g. "【空ホール】")
+                let cleanName = item.name.split('<br>')[0];
+
                 rowsHtml += `
                     <tr>
-                        <td><strong>${cat.name}</strong></td>
+                        <td><strong>${cleanName}</strong></td>
                         <td class="num">${item.price.toLocaleString()}</td>
                         <td class="center">1</td>
                         <td class="num">${item.price.toLocaleString()}</td>
