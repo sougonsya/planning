@@ -5,11 +5,11 @@ const categories = [
         name: '祭壇',
         title: '祭壇をお選びください',
         items: [
-            { id: 'altar-1', name: '祭壇（10万）', price: 100000, img: 'assets/images/altar_1.jpg', onlyForFixed: ['fixed-oneday-sora'] },
-            { id: 'altar-2', name: '祭壇（20万）', price: 200000, img: 'assets/images/altar_2.jpg' },
-            { id: 'altar-3', name: '祭壇（30万）', price: 300000, img: 'assets/images/altar_3.jpg', excludeForFixed: ['fixed-oneday-sora'] },
-            { id: 'altar-4', name: '祭壇（50万）', price: 500000, img: 'assets/images/altar_4.jpg', excludeForFixed: ['fixed-oneday-sora'] },
-            { id: 'altar-5', name: '祭壇（80万）', price: 800000, img: 'assets/images/altar_5.jpg', excludeForFixed: ['fixed-oneday-sora'] }
+            { id: 'altar-1', name: '祭壇（10万）', price: 100000, img: 'assets/images/10.webp', onlyForFixed: ['fixed-oneday-sora'] },
+            { id: 'altar-2', name: '祭壇（20万）', price: 200000, img: 'assets/images/20.webp' },
+            { id: 'altar-3', name: '祭壇（30万）', price: 300000, img: 'assets/images/30.webp', excludeForFixed: ['fixed-oneday-sora'] },
+            { id: 'altar-4', name: '祭壇（50万）', price: 500000, img: 'assets/images/50.webp', excludeForFixed: ['fixed-oneday-sora'] },
+            { id: 'altar-5', name: '祭壇（80万）', price: 800000, img: 'assets/images/80.webp', excludeForFixed: ['fixed-oneday-sora'] }
         ]
     },
     {
@@ -122,7 +122,7 @@ const categories = [
             { id: 'opt-stand-1', name: 'スタンド花 1段', price: 15000, img: 'assets/images/opt_stand1.png', allowQuantity: true },
             { id: 'opt-stand-2', name: 'スタンド花 2段', price: 20000, img: 'assets/images/opt_stand2.png', allowQuantity: true },
             { id: 'opt-fruit', name: '果物籠', price: 12000, img: 'assets/images/opt_fruit.png', allowQuantity: true },
-            { id: 'opt-incense', name: '線香ローソクセット', price: 10000, img: 'assets/images/opt_incense.jpg', allowQuantity: true },
+            { id: 'opt-incense', name: '線香ローソクセット', price: 10000, img: 'assets/images/opt-senkou.webp', allowQuantity: true },
             { id: 'opt-coffin-flower', name: '棺上飾り花', price: 15000, img: 'assets/images/opt_flower.jpg' },
             { id: 'opt-microbus', name: 'マイクロバス', price: 35000, img: 'assets/images/opt_bus.jpg' }
         ]
@@ -474,11 +474,15 @@ function renderItems(category, container) {
             'assets/images/urn_8.jpg',
             'assets/images/hearse_1.jpg',
             'assets/images/opt_dryice.jpg',
+            'assets/images/opt-senkou.webp',
             'assets/images/fixed_set.jpg',
-            'assets/images/koteihi.webp',
             'assets/images/koteihi2.webp',
             'assets/images/pic.webp',
-            'assets/images/altar_1.jpg'
+            'assets/images/10.webp',
+            'assets/images/20.webp',
+            'assets/images/30.webp',
+            'assets/images/50.webp',
+            'assets/images/80.webp'
         ];
 
         // 存在する画像があればそれを使い、無ければダミー画像を使う
