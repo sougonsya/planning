@@ -55,22 +55,87 @@
                 <h1 style="margin: 0; font-size: 1.5rem;">御見積</h1>
             </div>
             <ul id="category-list" class="category-nav">
-                <!-- Categories will be injected by JS -->
+                <li class="active">祭壇</li>
+                <li>棺</li>
+                <li>骨壺</li>
+                <li>遺影写真</li>
+                <li>枕花</li>
+                <li>納棺</li>
+                <li>霊柩車</li>
+                <li>固定費用</li>
+                <li>追加オプション</li>
+                <li>接待費</li>
             </ul>
         </nav>
 
         <!-- Main Content Area -->
         <main class="main-content">
             <header class="content-header" style="position: relative;">
-                <h2 id="current-category-title" style="margin: 0 auto; text-align: center;">カテゴリー名</h2>
+                <h2 id="current-category-title" style="margin: 0 auto; text-align: center;">祭壇をお選びください</h2>
                 <div class="step-indicator"
                     style="position: absolute; right: 0; top: 50%; transform: translateY(-50%);">
-                    <span id="current-step">1</span> / <span id="total-steps">8</span>
+                    <span id="current-step">1</span> / <span id="total-steps">10</span>
                 </div>
             </header>
 
             <div id="items-grid" class="items-grid">
-                <!-- Items will be injected by JS -->
+                <div class="item-card">
+                    <div class="card-img" style="background-image: url('assets/images/20.webp')">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-header-row"
+                            style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 10px;">
+                            <div class="card-title" style="margin-bottom: 0;">祭壇（20万）</div>
+                            <button class="expand-btn"
+                                onclick="event.stopPropagation(); openImageModal('assets/images/20.webp', '祭壇（20万）', 200000, false, false)"
+                                style="padding: 4px 8px; font-size: 0.8rem; background: #e0e0e0; border: none; border-radius: 4px; cursor: pointer; white-space: nowrap; margin-left: 10px;">拡大表示</button>
+                        </div>
+                        <div class="card-price">200,000円</div>
+                        <button class="select-btn">選択する</button>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <div class="card-img" style="background-image: url('assets/images/30.webp')"></div>
+                    <div class="card-body">
+                        <div class="card-header-row"
+                            style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 10px;">
+                            <div class="card-title" style="margin-bottom: 0;">祭壇（30万）</div>
+                            <button class="expand-btn"
+                                onclick="event.stopPropagation(); openImageModal('assets/images/30.webp', '祭壇（30万）', 300000, false, false)"
+                                style="padding: 4px 8px; font-size: 0.8rem; background: #e0e0e0; border: none; border-radius: 4px; cursor: pointer; white-space: nowrap; margin-left: 10px;">拡大表示</button>
+                        </div>
+                        <div class="card-price">300,000円</div>
+                        <button class="select-btn">選択する</button>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <div class="card-img" style="background-image: url('assets/images/50.webp')"></div>
+                    <div class="card-body">
+                        <div class="card-header-row"
+                            style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 10px;">
+                            <div class="card-title" style="margin-bottom: 0;">祭壇（50万）</div>
+                            <button class="expand-btn"
+                                onclick="event.stopPropagation(); openImageModal('assets/images/50.webp', '祭壇（50万）', 500000, false, false)"
+                                style="padding: 4px 8px; font-size: 0.8rem; background: #e0e0e0; border: none; border-radius: 4px; cursor: pointer; white-space: nowrap; margin-left: 10px;">拡大表示</button>
+                        </div>
+                        <div class="card-price">500,000円</div>
+                        <button class="select-btn">選択する</button>
+                    </div>
+                </div>
+                <div class="item-card">
+                    <div class="card-img" style="background-image: url('assets/images/80.webp')"></div>
+                    <div class="card-body">
+                        <div class="card-header-row"
+                            style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 10px;">
+                            <div class="card-title" style="margin-bottom: 0;">祭壇（80万）</div>
+                            <button class="expand-btn"
+                                onclick="event.stopPropagation(); openImageModal('assets/images/80.webp', '祭壇（80万）', 800000, false, false)"
+                                style="padding: 4px 8px; font-size: 0.8rem; background: #e0e0e0; border: none; border-radius: 4px; cursor: pointer; white-space: nowrap; margin-left: 10px;">拡大表示</button>
+                        </div>
+                        <div class="card-price">800,000円</div>
+                        <button class="select-btn">選択する</button>
+                    </div>
+                </div>
             </div>
 
             <!-- Reception/Attendees Section (Initially Hidden) -->
@@ -79,7 +144,7 @@
                     <h3>会葬者人数</h3>
                     <div class="stepper">
                         <button id="btn-decrease" class="stepper-btn">-</button>
-                        <span id="attendee-count" class="stepper-value">5</span>
+                        <span id="attendee-count" class="stepper-value">20</span>
                         <span class="unit">名</span>
                         <button id="btn-increase" class="stepper-btn">+</button>
                     </div>
@@ -95,16 +160,16 @@
             <div class="order-summary">
                 <div class="summary-label">現在の概算費用</div>
                 <div class="total-price">
-                    <span id="total-amount">200,000</span>
+                    <span id="total-amount">178,000</span>
                     <span class="currency">円</span>
-                    <span class="tax-note">（税込）</span>
+                    <span class="tax-note">（税抜き）</span>
                 </div>
             </div>
             <div class="action-buttons">
-                <button id="btn-prev" class="btn btn-secondary">戻る</button>
+                <button id="btn-prev" class="btn btn-secondary" disabled="">戻る</button>
                 <button id="btn-estimate" class="btn btn-info"
-                    style="margin-right: 10px; background-color: rgb(23, 162, 184); color: white; border: none;">見積書作成</button>
-                <button id="btn-next" class="btn btn-primary">次へ</button>
+                    style="margin-right: 10px; background-color: rgb(23, 162, 184); color: white; border: none; display: none;">見積書作成</button>
+                <button id="btn-next" class="btn btn-primary" style="display: inline-block;">次へ</button>
             </div>
         </footer>
     </div>
@@ -112,7 +177,7 @@
     <!-- Modals -->
     <div id="item-modal" class="modal hidden">
         <div class="modal-content">
-            <span class="close-modal">&times;</span>
+            <span class="close-modal">×</span>
             <div class="modal-body">
                 <img id="modal-img" src="" alt="">
                 <h3 id="modal-title"></h3>
@@ -123,6 +188,8 @@
     </div>
 
     <script src="js/script.js"></script>
+
+
 
 
 </body>
